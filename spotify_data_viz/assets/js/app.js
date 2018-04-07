@@ -158,12 +158,12 @@ import main_init from "./cs/main";
 // });
 
 
-function init() {
-    let root = document.getElementById('root');
-    main_init(root);
-}
+//function init() {
+//    let root = document.getElementById('root');
+//    main_init(root);
+//}
 
-$(init);
+//$(init);
 
 
 

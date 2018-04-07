@@ -19,8 +19,9 @@ defmodule SpotifyDataViz.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      #applications: [:spotify_ex],
       mod: {SpotifyDataViz.Application, []},
+      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
+        :phoenix_ecto, :postgrex, :spotify_ex],
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -45,7 +46,7 @@ defmodule SpotifyDataViz.Mixfile do
       {:distillery, "~> 1.5", runtime: false},
       {:comeonin, "~> 4.0"},
       {:argon2_elixir, "~> 1.2"},
-      #{:spotify_ex, "~> 2.0.8"},
+      {:spotify_ex, "~> 2.0.8"},
     ]
   end
 

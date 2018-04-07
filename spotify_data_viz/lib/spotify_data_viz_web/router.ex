@@ -17,6 +17,9 @@ defmodule SpotifyDataVizWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/profile", ProfileController, :index
+    get "/authorize", AuthorizationController, :authorize
+    get "/authenticate", AuthenticationController, :authenticate
   end
 
   # Other scopes may use custom stacks.

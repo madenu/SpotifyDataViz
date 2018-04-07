@@ -1,0 +1,13 @@
+<div class='profile'>
+
+  <h3> My Profile </h3>
+  <ul>
+    <li>Name: <%= @profile.display_name %></li>
+    <li>Birthdate: <%= @profile.birthdate %></li>
+    <li>ID: <%= @profile.id %></li>
+    <li>Email: <%= @profile.email %></li>
+    <li>Country: <%= @profile.country %></li>
+  </ul>
+
+
+</div>
