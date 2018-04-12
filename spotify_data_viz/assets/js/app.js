@@ -19,11 +19,12 @@ import "phoenix_html";
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
-import store from './cs/store';
+import store from "./cs/store";
 import main_init from "./cs/main";
+import socket from "./socket"
 
 $(function() {
+    let channel = socket.channel("app:", {});
     let root = document.getElementById('root');
-    main_init(root, store);
+    main_init(root, store, channel);
 });
-

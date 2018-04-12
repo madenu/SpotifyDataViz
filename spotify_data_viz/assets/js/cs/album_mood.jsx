@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import Plot from 'react-plotly.js'
 
 // TODO make dummy data and plot with D3.js
-export default function AlbumMood(props) {
+export function AlbumMood(props) {
   return (<Plot
     data={[
       {
@@ -18,3 +18,9 @@ export default function AlbumMood(props) {
     layout={ {title: 'A Fancy Plot'} }
     />)
 }
+
+function propsFromState(state) {
+  return {album_mood: state.album_mood}
+}
+
+export default connect(propsFromState)(AlbumMood)
