@@ -11,8 +11,14 @@ config :spotify_data_viz, SpotifyDataVizWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
-                    cd: Path.expand("../assets", __DIR__)]]
+  watchers: [
+    node: [
+      "node_modules/brunch/bin/brunch",
+      "watch",
+      "--stdin",
+      cd: Path.expand("../assets", __DIR__)
+    ]
+  ]
 
 # ## SSL Support
 #
@@ -51,8 +57,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :spotify_data_viz, SpotifyDataViz.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "spot",
-  password: "mi9ooWohYahg",
+  username: "postgres",
+  password: "postgres",
   database: "spotify_data_viz_dev",
   hostname: "localhost",
   pool_size: 10
