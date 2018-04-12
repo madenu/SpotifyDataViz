@@ -44,7 +44,6 @@
 }
 ```
 
-
 ## Requirements Checklist
 * Phoenix Elixir for non-trivial server-side logic
   * This will be met just by doing the project
