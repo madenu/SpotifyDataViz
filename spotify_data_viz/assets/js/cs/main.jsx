@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
-import store from '../store'
+import store from './store'
 import Nav from './nav'
 import TrackAnalysis from './track_analysis'
 import AlbumMood from './album_mood'
-import Authorize from './authorize'
 
 export default function main_init(root, store) {
     ReactDOM.render(
@@ -52,7 +51,6 @@ let Main = connect((state) => state)((props) => {
             <Route path='/' exact={true} render={AppLinks}/>
             <Route path='/album_mood' exact={true} render={() => <AlbumMood/>}/>
             <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis/>}/>
-            <Route path='/authorize' exact={true} render={() => <Authorize/>}/>
         </div>
     </Router>);
-}
+});
