@@ -19,16 +19,11 @@ import "phoenix_html";
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
-
+import store from './cs/store';
 import main_init from "./cs/main";
 
-function init() {
+$(function() {
     let root = document.getElementById('root');
-    main_init(root);
-}
-
-$(init);
-
-
-
+    main_init(root, store);
+});
 

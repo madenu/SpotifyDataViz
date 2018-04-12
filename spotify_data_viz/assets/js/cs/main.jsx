@@ -1,32 +1,30 @@
-
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+//import Nav from './nav';
 
-export default function main_init(root) {
-    ReactDOM.render(<Main />, root);
+export default function main_init(root, store) {
+    ReactDOM.render(
+        <Provider store={store}>
+            <Main state={store.getState()} />
+        </Provider>,
+        root
+    );
 }
 
 
-class Main extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            };
-    }
-
-    render() {
-        return(
+let Main = connect((state) => state)((props) => {
+    return(
+        <Router>
             <div>
                 <div id="login">
                     <h1>First, log in to spotify</h1>
-                    <a href="/authorize">Log in</a>
+                    <a href="/authorize" className="btn btn-success">Log in</a>
                 </div>
             </div>
-        );
-    }
-}
+        </Router>
+    );
+});
 
