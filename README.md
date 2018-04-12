@@ -3,13 +3,12 @@
 ## TODO
 ### Part I
 * ~~Take protections off master branch~~
-* Convert to a SPA
-* Move the login button (display where nav bar would be)
+* ~~Convert to a SPA~~
+* (Move the login button (display where nav bar would be))
 * Look at API and decide how to plot "album mood over time"
   * figure out track mood
   * each track is a data point (create a stem plot)
 * Plot a sample album mood
-* Merge changes into master
 
 ### Part II
 * Get / merge in work for radar-spider-chart`
@@ -19,6 +18,32 @@
 
 ### Part III
 * TBD
+* Beautify UI
+
+### Determining Track Mood from Audio features
+```
+{
+  "danceability" : 0.735,
+  "energy" : 0.578,
+  "key" : 5,
+  "loudness" : -11.840,
+  "mode" : 0,
+  "speechiness" : 0.0461,
+  "acousticness" : 0.514,
+  "instrumentalness" : 0.0902,
+  "liveness" : 0.159,
+  "valence" : 0.624,
+  "tempo" : 98.002,
+  "type" : "audio_features",
+  "id" : "06AKEBrKUckW0KREUWRnvT",
+  "uri" : "spotify:track:06AKEBrKUckW0KREUWRnvT",
+  "track_href" : "https://api.spotify.com/v1/tracks/06AKEBrKUckW0KREUWRnvT",
+  "analysis_url" : "https://api.spotify.com/v1/audio-analysis/06AKEBrKUckW0KREUWRnvT",
+  "duration_ms" : 255349,
+  "time_signature" : 4
+}
+```
+
 
 ## Requirements Checklist
 * Phoenix Elixir for non-trivial server-side logic
