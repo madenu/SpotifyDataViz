@@ -51,8 +51,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :spotify_data_viz, SpotifyDataViz.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "spot",
+  password: "mi9ooWohYahg",
   database: "spotify_data_viz_dev",
   hostname: "localhost",
   pool_size: 10

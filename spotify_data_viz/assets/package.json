@@ -6,7 +6,7 @@
     "watch": "brunch watch --stdin"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.1.0",
     "cookie-parser": "^1.4.3",
     "deep-freeze": "0.0.1",
     "express": "^4.16.3",
