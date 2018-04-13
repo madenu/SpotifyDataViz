@@ -8,13 +8,10 @@ import Nav from './nav'
 import TrackAnalysis from './track_analysis'
 import AlbumMood from './album_mood'
 
-export default function main_init(root, store) {
-    ReactDOM.render(
-        <Provider store={store}>
-            <Main state={store.getState()} />
-        </Provider>,
-        root
-    );
+export default function main_init(root, store, channel) {
+    ReactDOM.render(<Provider store={store}>
+        <Main state={store.getState()} channel={channel}/>
+    </Provider>, root);
 }
 
 let Site = connect(({token}) => {return {token};})((props) => {
@@ -54,6 +51,19 @@ let Site = connect(({token}) => {return {token};})((props) => {
 });
 
 let Main = connect((state) => state)((props) => {
+    props.channel.join().receive("ok", resp => {
+        console.log("Joined successfully", resp)
+    }).receive("error", resp => {
+        console.log("Unable to join", resp)
+    })
+
+    props.channel.on("album_mood:", (data) => {
+        console.log(data)
+        props.store.dispatch({type: "UPDATE_ALBUM_MOOD", data: data})})
+
+    props.channel.on("track_analysis:", (data) => {
+        console.log(data)
+        props.store.dispatch({type: "UPDATE_TRACK_ANALYSIS", data: data})})
 
     let page;
 

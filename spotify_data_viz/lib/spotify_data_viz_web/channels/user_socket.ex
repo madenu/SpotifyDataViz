@@ -3,9 +3,10 @@ defmodule SpotifyDataVizWeb.UserSocket do
 
   ## Channels
   # channel "room:*", SpotifyDataVizWeb.RoomChannel
+  channel("app:*", SpotifyDataVizWeb.AppChannel)
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  transport(:websocket, Phoenix.Transports.WebSocket)
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
