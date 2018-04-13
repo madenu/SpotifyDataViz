@@ -51,11 +51,11 @@ let Site = connect(({token}) => {return {token};})((props) => {
 });
 
 let Main = connect((state) => state)((props) => {
-    props.channel.join().receive("ok", resp => {
-        console.log("Joined successfully", resp)
-    }).receive("error", resp => {
-        console.log("Unable to join", resp)
-    })
+    //  props.channel.join().receive("ok", resp => {
+    //    console.log("Joined successfully", resp)
+    //}).receive("error", resp => {
+    //    console.log("Unable to join", resp)
+    //})
 
     props.channel.on("album_mood:", (data) => {
         console.log(data)
@@ -67,7 +67,7 @@ let Main = connect((state) => state)((props) => {
 
     let page;
 
-    if (props.token != nil) {
+    if (props.token != undefined) {
         page = <Site />;
     }
     else {
