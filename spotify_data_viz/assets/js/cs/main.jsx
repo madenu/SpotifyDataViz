@@ -17,8 +17,7 @@ export default function main_init(root, store) {
     );
 }
 
-
-let Main = connect((state) => state)((props) => {
+let Site = connect(({token}) => {return {token};})((props) => {
     function AppLinks() {
         // TODO fix up the cards
         return (<div>
@@ -45,12 +44,31 @@ let Main = connect((state) => state)((props) => {
         </div>);
     }
 
+    console.log("Site", props);
+    return <div>
+        <Nav/>
+        <Route path='/' exact={true} render={AppLinks}/>
+        <Route path='/album_mood' exact={true} render={() => <AlbumMood/>}/>
+        <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis/>}/>
+    </div>;
+});
+
+let Main = connect((state) => state)((props) => {
+
+    let page;
+
+    if (props.token != nil) {
+        page = <Site />;
+    }
+    else {
+        page = <a href='/authorize' className='btn btn-success' style={{
+            margin: auto,
+        }}>Log In with Spotify</a>;
+    }
+
     return (<Router>
-        <div>
-            <Nav/>
-            <Route path='/' exact={true} render={AppLinks}/>
-            <Route path='/album_mood' exact={true} render={() => <AlbumMood/>}/>
-            <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis/>}/>
-        </div>
+        <span>
+            { page }
+        </span>
     </Router>);
 });
