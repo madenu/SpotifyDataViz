@@ -1,19 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom';
-import {Button, NavItem} from 'reactstrap'
+import {Form, Button, NavItem} from 'reactstrap'
 
 let Login = connect(({login}) => {return {login};})((props) => {
     return (<div className="navbar-text">
-        <a href='/authorize' className='btn btn-success'>Log In with Spotify</a>
+        <p><strong>ERROR</strong></p>
     </div>);
 });
 
-let Session = connect(({token}) => {return {token};})((props) => {
-    console.lot("Session Token", props.token);
+let Session = connect((token) => token)((props) => {
+    console.log("Session Props", props);
     return <div className="navbar-text">
-        <span>User goes here</span>
         <Form inline>
+            <span id="user">User goes here</span>
             <Button color="danger">Log Out</Button>
         </Form>
     </div>;
@@ -22,8 +22,9 @@ let Session = connect(({token}) => {return {token};})((props) => {
 function Nav(props) {
     let session_info;
 
+    console.log("Navbar props", props);
     if (props.token) {
-        session_info = <Session token={props.token} />;
+        session_info = <Session />;
     }
     else {
         session_info = <Login />;
@@ -48,8 +49,9 @@ function Nav(props) {
 }
 
 function state_to_props(state) {
+    console.log("state_to_props", state)
     return {
-        token: state.token,
+        token: state.user_token,
     };
 }
 
