@@ -1,14 +1,14 @@
 defmodule SpotifyDataVizWeb.AppChannel do
   use SpotifyDataVizWeb, :channel
 
-  # TODO cannot use app: alone without username because conflict
   # TODO authorize user
 
   def join("app:" <> _subtopic, _payload, socket) do
     {:ok,
      %{
        album_mood: %{album_name: "DUNNO", album_tracks: ["MOMMA", "SAID", "KNOCUOUT"]},
-       track_analysis: %{recent_tracks: ["ONE", "TWO", "THREE"]}
+       track_analysis: %{recent_tracks: ["ONE", "TWO", "THREE"]},
+       user_token: nil
      }, socket}
   end
 
