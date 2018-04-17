@@ -55,6 +55,66 @@ defmodule SpotifyDataViz.Utils do
 
   end
 
+  def recent_tracks(state, token) do
+
+    IO.inspect("state is")
+    IO.inspect(state)
+    IO.inspect("token is")
+    IO.inspect(token)
+
+    authorization = [{"Authorization", "Bearer #{token["access_token"]}"}]
+
+    url = "https://api.spotify.com/v1/me/player/recently-played"
+    %{items: tracks} = HTTPoison.get(url, authorization)
+
+    IO.inspect("tracks: ")
+    IO.inspect(tracks)
+
+    track_ids = Enum.map(tracks, fn(k) -> k.id end)
+    track_names = Enum.map(tracks, fn(k) -> k.name end)
+
+    combined_tracks = Enum.zip(track_names, track_ids)
+
+    IO.inspect("track list: ")
+    IO.inspect(combined_tracks)
+
+    %{
+      album_mood: state.album_mood,
+      track_analysis: %{tracks: combined_tracks},
+      user_token: state.user_token
+    }
+
+  end
+
+  def get_track_features(state, token, track_id) do
+    IO.inspect("state is")
+    IO.inspect(state)
+    IO.inspect("track_id is")
+    IO.inspect(track_id)
+    IO.inspect("token is")
+    IO.inspect(token)
+
+    authorization = [{"Authorization", "Bearer #{token["access_token"]}"}]
+    audio_features_url = "https://api.spotify.com/v1/audio-features/#{track_id}"
+    audio_features = HTTPoison.get(audio_features_url, authorization)
+
+    IO.inspect("audio features is")
+    IO.inspect(audio_features)
+
+    dance = audio_features.danceability
+    energy = audio_features.energy
+    speech = audio_features.speechiness
+    valence = audio_features.valence
+    instrument = audio_features.instrumentalness
+    features = %{danceability: dance, energy: energy, speechiness: speech, valence: valence, instrumentalness: instrument}
+
+    %{
+      album_mood: state.album_mood,
+      track_analysis: %{state.track_analysis | features: features},
+      user_token: state.user_token
+    }
+  end
+
 #  album_id = "1WBZyULtlANBKed7Zf9cDP"
 #
 #  {:ok, profile} = Spotify.Profile.me(conn)
