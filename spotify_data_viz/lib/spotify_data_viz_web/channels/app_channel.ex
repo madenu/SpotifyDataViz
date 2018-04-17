@@ -1,24 +1,22 @@
 defmodule SpotifyDataVizWeb.AppChannel do
   use SpotifyDataVizWeb, :channel
 
+  alias SpotifyDataViz.Utils
+
   # TODO authorize user
 
   def join("app:" <> _subtopic, _payload, socket) do
-    {:ok,
-     %{
-       album_mood: %{album_name: "DUNNO", album_tracks: ["MOMMA", "SAID", "KNOCUOUT"]},
-       track_analysis: %{recent_tracks: ["ONE", "TWO", "THREE"]},
-       user_token: nil
-     }, socket}
+    app = Utils.new()
+    socket = socket
+    |> assign(:app, app)
+    #|> assign(:name, name)
+    {:ok, app, socket}
   end
 
-  def handle_in(
-        "album_mood:" <> _data,
-        %{"albumName" => albumName},
-        socket
-      ) do
-    state = %{}
-    {:reply, {:ok, state}, socket}
+  def handle_in("album_mood", %{"albumID" => albumID, "token" => token}, socket) do
+    app = Utils.album_mood(socket.assigns[:app], token, albumID)
+    socket = assign(socket, :app, app)
+    {:reply, {:ok, %{ "app" => app}}, socket}
   end
 
   def handle_in(

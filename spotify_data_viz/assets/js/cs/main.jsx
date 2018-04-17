@@ -45,7 +45,7 @@ function Site(props) {
     return (<div>
         <Nav/>
         <Route path='/' exact={true} render={AppLinks}/>
-        <Route path='/album_mood' exact={true} render={() => <AlbumMood/>}/>
+        <Route path='/album_mood' exact={true} render={() => <AlbumMood channel={props.channel} />}/>
         <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis/>}/>
     </div>)
 }
@@ -56,6 +56,8 @@ let Main = connect((state) => state)((props) => {
     //}).receive("error", resp => {
     //    console.log("Unable to join", resp)
     //})
+
+
 
     props.channel.on("album_mood:", (data) => {
         console.log(data)
@@ -75,7 +77,7 @@ let Main = connect((state) => state)((props) => {
     let page = null
     var user_token = store.getState().user_token
     if (user_token) {
-        page = <Site/>;
+        page = <Site channel={props.channel}/>;
     } else {
         page = <div id="login">
             <a onClick={Server.authorize} className='btn btn-success'>Log In with Spotify</a>

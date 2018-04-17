@@ -1,23 +1,44 @@
-defmodule SpotifyDataViz.SpotifyUtils do
+defmodule SpotifyDataViz.Utils do
 
   def new do
     %{
       album_mood: %{album_name: "DUNNO", album_tracks: ["MOMMA", "SAID", "KNOCUOUT"]},
-      track_analysis: %{recent_tracks: ["ONE", "TWO", "THREE"]}
+      track_analysis: %{recent_tracks: ["ONE", "TWO", "THREE"]},
+      user_token: nil
     }
   end
 
-  def album_mood(state, album_id) do
+  def album_mood(state, token, album_id) do
 
-    conn = ""
+    IO.inspect("state is")
+    IO.inspect(state)
+    IO.inspect("album_id is")
+    IO.inspect(album_id)
+    IO.inspect("token is")
+    IO.inspect(token)
 
-    {:ok, album} = Spotify.Album.get_album(conn, album_id)
-    {:ok, %{items: tracks}} = Spotify.Album.get_album_tracks(conn, album_id)
+    authorization = [{"Authorization", "Bearer #{token["access_token"]}"}]
+
+    album_url = "https://api.spotify.com/v1/albums/#{album_id}"
+    album = HTTPoison.get(album_url, authorization)
+
+    IO.inspect("album is")
+    IO.inspect(album)
+
+    tracks_url = "https://api.spotify.com/v1/albums/#{album_id}/tracks"
+    %{items: tracks} = HTTPoison.get(tracks_url, authorization)
+
+    IO.inspect("tracks is")
+    IO.inspect(tracks)
 
     track_ids = Enum.map(tracks, fn(k) -> k.id end)
                 |> Enum.join(",")
 
-    {:ok, audio_features } = Spotify.Track.audio_features(conn, ids: track_ids)
+    audio_features_url = "https://api.spotify.com/v1/audio-features" <> URI.encode_query(%{ids: track_ids})
+    audio_features = HTTPoison.get(audio_features_url, authorization)
+
+    IO.inspect("audio features is")
+    IO.inspect(audio_features)
 
     #necessary as tracks and audio features are separate map arrays
     tracks_af_combined = Enum.map(audio_features, fn(k) ->
@@ -28,7 +49,8 @@ defmodule SpotifyDataViz.SpotifyUtils do
 
     %{
       album_mood: %{album_name: album.name, album_tracks: tracks_af_combined},
-      track_analysis: state.track_analysis
+      track_analysis: state.track_analysis,
+      user_token: state.user_token
     }
 
   end
