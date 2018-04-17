@@ -1,6 +1,65 @@
 # cs5610project2
-Spotify Data Viz Site
 
+## TODO
+### Part I
+* ~~Take protections off master branch~~
+* ~~Convert to a SPA~~
+* (Move the login button (display where nav bar would be))
+* Look at API and decide how to plot "album mood over time"
+  * figure out track mood
+  * each track is a data point (create a stem plot)
+* Plot a sample album mood
+
+### Part II
+* Get / merge in work for radar-spider-chart`
+* Do we want to use the database to store auth tokens?   
+  * Should they be present if the server is restarted?
+  * How long do they / should they last?
+
+### Part III
+* TBD
+* Beautify UI
+
+### Determining Track Mood from Audio features
+```
+{
+  "danceability" : 0.735,
+  "energy" : 0.578,
+  "key" : 5,
+  "loudness" : -11.840,
+  "mode" : 0,
+  "speechiness" : 0.0461,
+  "acousticness" : 0.514,
+  "instrumentalness" : 0.0902,
+  "liveness" : 0.159,
+  "valence" : 0.624,
+  "tempo" : 98.002,
+  "type" : "audio_features",
+  "id" : "06AKEBrKUckW0KREUWRnvT",
+  "uri" : "spotify:track:06AKEBrKUckW0KREUWRnvT",
+  "track_href" : "https://api.spotify.com/v1/tracks/06AKEBrKUckW0KREUWRnvT",
+  "analysis_url" : "https://api.spotify.com/v1/audio-analysis/06AKEBrKUckW0KREUWRnvT",
+  "duration_ms" : 255349,
+  "time_signature" : 4
+}
+```
+
+## Requirements Checklist
+* Phoenix Elixir for non-trivial server-side logic
+  * This will be met just by doing the project
+* Use external API (Spotify)
+* Use Postgres database (auth tokens or site log info)
+* Use a channel (i.e. a websocket) to pass data to/from server
+* Use React-Router to create a SPA
+* Use React to render the app
+* (Use Redux to control app state)
+* Use something not covered this semester (D3.js)
+* Deploy to VPS with HTTPS
+* Create a 2000-word report
+
+I don't think we'll need to use the API part of our router. We won't be making AJAX requests to GET/POST stuff from/to our database. It looks like, we can use a websocket to have the sever and client communicate. We should still be able to create a single-page-application.
+
+## Spotify Data Viz Site
 Idea Submission
 
 Our project idea is to build a single-page web app that displays visualized trends from a users Spotify data over time.  For example, a user could see a visual chart of attributes from individual songs pulled from their 50 most recently-played songs. This chart will display attributes such as the “danceability” and “energy” intensity of the song. The user will be able to choose which song is displayed from a dropdown.

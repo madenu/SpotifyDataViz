@@ -20,6 +20,8 @@ defmodule SpotifyDataViz.Mixfile do
   def application do
     [
       mod: {SpotifyDataViz.Application, []},
+      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
+        :phoenix_ecto, :postgrex, :spotify_ex],
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -43,7 +45,8 @@ defmodule SpotifyDataViz.Mixfile do
       {:cowboy, "~> 1.0"},
       {:distillery, "~> 1.5", runtime: false},
       {:comeonin, "~> 4.0"},
-      {:argon2_elixir, "~> 1.2"}
+      {:argon2_elixir, "~> 1.2"},
+      {:spotify_ex, "~> 2.0.8"},
     ]
   end
 

@@ -1,3 +1,11 @@
-/* This file is for your main application css. */
-
 @import "bootstrap";
+
+#user {
+    padding-right: 10px;
+}
+
+#login {
+    position: absolute;
+    top: 50%;
+    text-align: center;
+}

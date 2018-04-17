@@ -1,0 +1,50 @@
+<div class='profile'>
+
+  <h3> My Profile </h3>
+  <ul>
+    <li>Name: <%= @profile.display_name %></li>
+    <li>Birthdate: <%= @profile.birthdate %></li>
+    <li>ID: <%= @profile.id %></li>
+    <li>Email: <%= @profile.email %></li>
+    <li>Country: <%= @profile.country %></li>
+  </ul>
+
+  <p><strong>Album: </strong><%= @album.name %></p>
+  <p><strong>Artist: </strong><%= @artist %></p>
+
+  <div>
+  <table class="table">
+    <thead>
+        <tr>
+            <th>Track</th>
+            <th>Acousticness</th>
+            <th>Danceability</th>
+            <th>Energy</th>
+            <th>Instrumentalness</th>
+            <th>Liveness</th>
+            <th>Loudness</th>
+            <th>Speechiness</th>
+            <th>Tempo</th>
+            <th>Valence</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%= for track <- @tracks do %>
+            <tr>
+            <td><%= track.name %></td>
+            <td><%= track.acousticness %></td>
+            <td><%= track.danceability %></td>
+            <td><%= track.energy %></td>
+            <td><%= track.instrumentalness %></td>
+            <td><%= track.liveness %></td>
+            <td><%= track.loudness %></td>
+            <td><%= track.speechiness %></td>
+            <td><%= track.tempo %></td>
+            <td><%= track.valence %></td>
+            </tr>
+        <% end %>
+    </tbody>
+  </table>
+  </div>
+
+</div>
