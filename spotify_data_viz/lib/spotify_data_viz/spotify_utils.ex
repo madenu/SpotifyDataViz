@@ -17,16 +17,16 @@ defmodule SpotifyDataViz.Utils do
     IO.inspect("token is")
     IO.inspect(token)
 
-    authorization = [{"Authorization", "Bearer #{token["access_token"]}"}]
+    authorization = [{"Authorization", "Bearer #{token["spotify_access_token"]}"}]
 
     album_url = "https://api.spotify.com/v1/albums/#{album_id}"
-    album = HTTPoison.get(album_url, authorization)
+    {:ok, album} = HTTPoison.get(album_url, authorization)
 
     IO.inspect("album is")
     IO.inspect(album)
 
     tracks_url = "https://api.spotify.com/v1/albums/#{album_id}/tracks"
-    %{items: tracks} = HTTPoison.get(tracks_url, authorization)
+    {:ok, %{items: tracks}} = HTTPoison.get(tracks_url, authorization)
 
     IO.inspect("tracks is")
     IO.inspect(tracks)
@@ -35,7 +35,7 @@ defmodule SpotifyDataViz.Utils do
                 |> Enum.join(",")
 
     audio_features_url = "https://api.spotify.com/v1/audio-features" <> URI.encode_query(%{ids: track_ids})
-    audio_features = HTTPoison.get(audio_features_url, authorization)
+    {:ok, audio_features} = HTTPoison.get(audio_features_url, authorization)
 
     IO.inspect("audio features is")
     IO.inspect(audio_features)
@@ -45,7 +45,7 @@ defmodule SpotifyDataViz.Utils do
       Map.merge(k, Enum.find(tracks, fn (x) -> x.id == k.id end)) end)
 
     #necessary as artist is an embedded list within album
-    artist = Map.get(Enum.fetch!(album.artists,0), "name")
+    #artist = Map.get(Enum.fetch!(album.artists,0), "name")
 
     %{
       album_mood: %{album_name: album.name, album_tracks: tracks_af_combined},

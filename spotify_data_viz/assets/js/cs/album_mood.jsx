@@ -10,11 +10,11 @@ export function AlbumMood(props) {
     console.log("props is")
     console.log(props)
 
-    var user_token = store.getState().user_token
+    var token = props.token
 
     function getAlbum(album) {
         props.channel.join()
-        props.channel.push("album_mood", {albumID: album, token: user_token})
+        props.channel.push("album_mood", {albumID: album, token: token})
     }
 
   return (<div>
