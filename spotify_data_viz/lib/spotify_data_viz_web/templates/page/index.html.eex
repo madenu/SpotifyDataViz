@@ -1,2 +1,7 @@
+<script>
+window.access_token = "<%= @token.access_token %>";
+window.refresh_token = "<%= @token.refresh_token %>";
+</script>
+
 <div id="root">
 </div>

@@ -15,6 +15,7 @@ defmodule SpotifyDataVizWeb.AppChannel do
 
   def handle_in("album_mood", %{"albumID" => albumID, "token" => token}, socket) do
     app = Utils.album_mood(socket.assigns[:app], token, albumID)
+    IO.inspect(app)
     socket = assign(socket, :app, app)
     {:reply, {:ok, %{ "app" => app}}, socket}
   end

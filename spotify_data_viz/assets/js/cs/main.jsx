@@ -45,8 +45,8 @@ function Site(props) {
     return (<div>
         <Nav/>
         <Route path='/' exact={true} render={AppLinks}/>
-        <Route path='/album_mood' exact={true} render={() => <AlbumMood channel={props.channel} />}/>
-        <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis channel={props.channel} />}/>
+        <Route path='/album_mood' exact={true} render={() => <AlbumMood channel={props.channel} token={props.token} />}/>
+        <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis channel={props.channel} token={props.token} />}/>
     </div>)
 }
 
@@ -75,14 +75,23 @@ let Main = connect((state) => state)((props) => {
     })
 
     let page = null
-    var user_token = store.getState().user_token
-    if (user_token) {
-        page = <Site channel={props.channel}/>;
+    var user_token = {
+        spotify_access_token: window.access_token,
+        spotify_refresh_token: window.refresh_token
+    }
+    console.log(user_token)
+
+
+
+    if (window.access_token) {
+        page = <Site channel={props.channel} token={user_token}/>;
     } else {
         page = <div id="login">
-            <a onClick={Server.authorize} className='btn btn-success'>Log In with Spotify</a>
+            <a href="http://localhost:4000/authorize" className='btn btn-success'>Log In with Spotify</a>
         </div>;
     }
+
+
 
     return (<Router>
         <div>
