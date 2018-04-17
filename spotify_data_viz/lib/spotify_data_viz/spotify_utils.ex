@@ -1,5 +1,7 @@
 defmodule SpotifyDataViz.Utils do
 
+  alias Spotify.{Client, Credentials, Album, Track}
+
   def new do
     %{
       album_mood: %{album_name: "DUNNO", album_tracks: ["MOMMA", "SAID", "KNOCUOUT"]},
@@ -8,45 +10,31 @@ defmodule SpotifyDataViz.Utils do
     }
   end
 
+  def userToken(token) do
+    %Credentials{access_token: token["spotify_access_token"], refresh_token: token["spotify_refresh_token"]}
+  end
+
   def album_mood(state, token, album_id) do
 
-    IO.inspect("state is")
-    IO.inspect(state)
-    IO.inspect("album_id is")
-    IO.inspect(album_id)
-    IO.inspect("token is")
-    IO.inspect(token)
+    #create credential object for api requests
+    conn = userToken(token)
 
-    authorization = [{"Authorization", "Bearer #{token["spotify_access_token"]}"}]
+    #pull album and tracks with api request
+    {:ok, album} = Album.get_album(conn, album_id)
+    {:ok, %{items: tracks}} = Album.get_album_tracks(conn, album_id)
 
-    album_url = "https://api.spotify.com/v1/albums/#{album_id}"
-    {:ok, album} = HTTPoison.get(album_url, authorization)
-
-    IO.inspect("album is")
-    IO.inspect(album)
-
-    tracks_url = "https://api.spotify.com/v1/albums/#{album_id}/tracks"
-    {:ok, %{items: tracks}} = HTTPoison.get(tracks_url, authorization)
-
-    IO.inspect("tracks is")
-    IO.inspect(tracks)
-
+    #create list of track ids for audio_features request
     track_ids = Enum.map(tracks, fn(k) -> k.id end)
                 |> Enum.join(",")
 
-    audio_features_url = "https://api.spotify.com/v1/audio-features" <> URI.encode_query(%{ids: track_ids})
-    {:ok, audio_features} = HTTPoison.get(audio_features_url, authorization)
+    #pull audio features with api request
+    {:ok, audio_features } = Track.audio_features(conn, ids: track_ids)
 
-    IO.inspect("audio features is")
-    IO.inspect(audio_features)
-
-    #necessary as tracks and audio features are separate map arrays
+    #merge tracks + af (necessary as tracks and audio features are separate map arrays)
     tracks_af_combined = Enum.map(audio_features, fn(k) ->
       Map.merge(k, Enum.find(tracks, fn (x) -> x.id == k.id end)) end)
 
-    #necessary as artist is an embedded list within album
-    #artist = Map.get(Enum.fetch!(album.artists,0), "name")
-
+    #return state with updated album_mood from request
     %{
       album_mood: %{album_name: album.name, album_tracks: tracks_af_combined},
       track_analysis: state.track_analysis,
@@ -54,26 +42,5 @@ defmodule SpotifyDataViz.Utils do
     }
 
   end
-
-#  album_id = "1WBZyULtlANBKed7Zf9cDP"
-#
-#  {:ok, profile} = Spotify.Profile.me(conn)
-#  {:ok, album} = Spotify.Album.get_album(conn, album_id)
-#  {:ok, %{items: tracks}} = Spotify.Album.get_album_tracks(conn, album_id)
-#
-#  track_ids = Enum.map(tracks, fn(k) -> k.id end)
-#              |> Enum.join(",")
-#
-#  {:ok, audio_features } = Spotify.Track.audio_features(conn, ids: track_ids)
-#
-#  #necessary as tracks and audio features are separate map arrays
-#  tracks_af_combined = Enum.map(audio_features, fn(k) ->
-#    Map.merge(k, Enum.find(tracks, fn (x) -> x.id == k.id end)) end)
-#
-#  #necessary as artist is an embedded list within album
-#  artist = Map.get(Enum.fetch!(album.artists,0), "name")
-#
-#  render conn, "profile.html", profile: profile, artist: artist, album: album,
-#                               tracks: tracks_af_combined
 
 end

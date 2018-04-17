@@ -83,7 +83,7 @@ let Main = connect((state) => state)((props) => {
 
 
 
-    if (user_token) {
+    if (window.access_token) {
         page = <Site channel={props.channel} token={user_token}/>;
     } else {
         page = <div id="login">
