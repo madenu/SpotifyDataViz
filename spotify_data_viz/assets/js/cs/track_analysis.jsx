@@ -14,6 +14,18 @@ export function TrackAnalysis(props) {
         });
     }
 
+    function getSong(e) {
+        let song = e.target.value;
+        populateRadar(song);
+    }
+
+    function populateRadar(song) {
+        let data = _.find(recents, function(t){
+            return t.name == song;
+        })
+        console.log("data", data);
+    }
+
     function getTracks() {
         console.log("getting tracks...")
         props.channel.push("track_analysis", {token: token})
@@ -28,33 +40,26 @@ export function TrackAnalysis(props) {
         <div id="side-0" className="side col">
             <button id={"ok"} className={"btn btn-primary"} onClick={() => getTracks()}>Populate</button>
         </div>
-        <div className="col-3">
+        <div className="col-3" id="select-recents" >
             <Form>
-                <select className="form-control" size="10" >
+                <select id="recents" className="form-control" size="20" onChange={getSong}>
                     {select_recents}
                 </select>
             </Form>
         </div>
-        <div>
+        <div className="col-7 offset-2" id="radar" >
             <Radar
                 width={500}
                 height={500}
                 padding={70}
                 domainMax={1}
                 highlighted={null}
-                onHover={(point) => {
-                    if (point) {
-                        console.log('hovered over a data point');
-                    } else {
-                        console.log('not over anything');
-                    }
-                }}
                 data={{
                     variables: [
                         {key: 'danceability', label: 'Danceability'},
                         {key: 'energy', label: 'Energy'},
-                        {key: 'tempo', label: 'Tempo'},
-                        {key: 'loudness', label: 'Loudness'},
+                        {key: 'valence', label: 'Valence'},
+                        {key: 'instrumentalness', label: 'Instrumentalness'},
                         {key: 'speechiness', label: 'Speechiness'},
                     ],
                     sets: [
@@ -64,8 +69,8 @@ export function TrackAnalysis(props) {
                             values: {
                                 danceability: .35,
                                 energy: .8,
-                                tempo: .6,
-                                loudness: .8,
+                                valence: .6,
+                                instrumentalness: .8,
                                 speechiness: .7,
                             },
                         },
