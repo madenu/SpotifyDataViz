@@ -1,88 +1,44 @@
 # cs5610project2
 
-## TODO
-### Part I
-* ~~Take protections off master branch~~
-* ~~Convert to a SPA~~
-* (Move the login button (display where nav bar would be))
-* Look at API and decide how to plot "album mood over time"
-  * figure out track mood
-  * each track is a data point (create a stem plot)
-* Plot a sample album mood
-
-### Part II
-* Get / merge in work for radar-spider-chart`
-* Do we want to use the database to store auth tokens?   
-  * Should they be present if the server is restarted?
-  * How long do they / should they last?
-
-### Part III
-* TBD
-* Beautify UI
-
-### Determining Track Mood from Audio features
-```
-{
-  "danceability" : 0.735,
-  "energy" : 0.578,
-  "key" : 5,
-  "loudness" : -11.840,
-  "mode" : 0,
-  "speechiness" : 0.0461,
-  "acousticness" : 0.514,
-  "instrumentalness" : 0.0902,
-  "liveness" : 0.159,
-  "valence" : 0.624,
-  "tempo" : 98.002,
-  "type" : "audio_features",
-  "id" : "06AKEBrKUckW0KREUWRnvT",
-  "uri" : "spotify:track:06AKEBrKUckW0KREUWRnvT",
-  "track_href" : "https://api.spotify.com/v1/tracks/06AKEBrKUckW0KREUWRnvT",
-  "analysis_url" : "https://api.spotify.com/v1/audio-analysis/06AKEBrKUckW0KREUWRnvT",
-  "duration_ms" : 255349,
-  "time_signature" : 4
-}
-```
-
 ## Requirements Checklist
-* Phoenix Elixir for non-trivial server-side logic
-  * This will be met just by doing the project
-* Use external API (Spotify)
+* ~~Phoenix Elixir for non-trivial server-side logic~~
+* ~~Use external API (Spotify)~~
 * Use Postgres database (auth tokens or site log info)
-* Use a channel (i.e. a websocket) to pass data to/from server
-* Use React-Router to create a SPA
-* Use React to render the app
-* (Use Redux to control app state)
-* Use something not covered this semester (D3.js)
+* ~~Use a channel (i.e. a websocket) to pass data to/from server~~
+* ~~Use React-Router to create a SPA~~
+* ~~Use React to render the app~~
+* ~~(Use Redux to control app state)~~
+* ~~Use something not covered this semester (D3.js)~~
 * Deploy to VPS with HTTPS
 * Create a 2000-word report
 
-I don't think we'll need to use the API part of our router. We won't be making AJAX requests to GET/POST stuff from/to our database. It looks like, we can use a websocket to have the sever and client communicate. We should still be able to create a single-page-application.
-
-## Spotify Data Viz Site
-Idea Submission
-
-Our project idea is to build a single-page web app that displays visualized trends from a users Spotify data over time.  For example, a user could see a visual chart of attributes from individual songs pulled from their 50 most recently-played songs. This chart will display attributes such as the “danceability” and “energy” intensity of the song. The user will be able to choose which song is displayed from a dropdown.
-
-We can also apply this idea to an entire album and have a visual representation of how an album’s attributes shift over time.  Different attributes include the “energy”, “danceability”, “instrumentalness”, “speechiness” (frequency of spoken words), etc.
-We will be using the Spotify Web API, which allows us to access user-related data such as playlists and track history, in addition to artist, album, and track metadeta from the Spotify catalogue.  We will use OAuth, specifically the OAuth 2.0 specification, for client authorization and our visualizations will be created using components from the D3.js JavaScript library.
-
-The database will store information related to user requests, such as frequency of logins and which visual components users are using more often.  We think this is very useful information, especially if we were to continue development of the app.
-
-We plan to build the UI by dividing the work among members of the team. The current plan is to have two data visualizations. Two members will work on the first, and the remaining two will work on the second. The user will be presented with a landing page where they can choose which visualization to navigate to. A general mockup is shown below using ASCII art.
-
+## Useful Dev Things
 ```
-******************************************************
-*         NAVIGATION BAR AND USER LOGIN              *
-******************************************************
-*                                                    *
-*    ********************     *******************    *  
-*    *                  *     *                 *    *
-*    * CLICK TO SEE     *     * CLICK TO SEE    *    *
-*    * VISUALIZATION    *     * VISUALIZATION   *    *
-*    * NUMBER ONE       *     * NUMBER TWO      *    *
-*    *                  *     *                 *    *
-*    ********************     *******************    *
-*                                                    *     
-******************************************************
+{:ok, profile} = Spotify.Profile.me(conn)
+{:ok, album} = Spotify.Album.get_album(conn, album_id)
+{:ok, %{items: tracks}} = Spotify.Album.get_album_tracks(conn, album_id)
+{:ok, audio_features } = Spotify.Track.audio_features(conn, ids: track_ids)
+```
+
+## TODO
+* Plot a sample album mood
+* Delete stuff associated with user token from redux state on server side
+* Fix logout button
+* Fix the redirect after authentication (the page is blank but Nav is there)
+* Handle expired tokens:
+```
+[debug] INCOMING "album_mood" on "app:" to SpotifyDataVizWeb.AppChannel
+  Transport:  Phoenix.Transports.WebSocket
+  Parameters: %{"albumID" => "1WBZyULtlANBKed7Zf9cDP", "token" => %{"spotify_access_token" => "BQBaQ04gdTM_JnSsmDkXFdkpqIvNRmMKQ5I8InwYW4o0LW2CLzbQc9eB7bJ4ZnGJbe6QVVIFAaMBzll9SIY8H7eVCCxipSIsoGc96Q6vl7M448jrT3SuoU5a1XwBemBgrcbW6NEMPAS_Jp9lP2pbd1u0Q1BoA_5k3uM2ZAEUeIlMep3bkvrjJqwZLVNQKNhesxB8S0khuey5V6oqlnLDOZ9fhX3h1g", "spotify_refresh_token" => "AQAMwauxHwYdAUcL9UGN89YAs4DvYXABk60_sXhLNanuW8nkRfNXPBXx1eZE42_6LApttdqwmCAK7HR75YI2uBTeZXQOQk13PBGWTKCd13YErTjZZm0SdVL3TroZPV4iJkw"}}
+[error] GenServer #PID<0.436.0> terminating
+** (MatchError) no match of right hand side value: {:ok, %{"error" => %{"message" => "The access token expired", "status" => 401}}}
+    (spotify_data_viz) lib/spotify_data_viz/spotify_utils.ex:18: SpotifyDataViz.Utils.albumMood/2
+    (spotify_data_viz) lib/spotify_data_viz_web/channels/app_channel.ex:12: SpotifyDataVizWeb.AppChannel.handle_in/3
+    (phoenix) lib/phoenix/channel/server.ex:244: anonymous fn/4 in Phoenix.Channel.Server.handle_info/2
+    (spotify_data_viz) lib/spotify_data_viz_web/endpoint.ex:1: SpotifyDataVizWeb.Endpoint.instrument/4
+    (stdlib) gen_server.erl:616: :gen_server.try_dispatch/4
+    (stdlib) gen_server.erl:686: :gen_server.handle_msg/6
+    (stdlib) proc_lib.erl:247: :proc_lib.init_p_do_apply/3
+Last message: %Phoenix.Socket.Message{event: "album_mood", join_ref: "1", payload: %{"albumID" => "1WBZyULtlANBKed7Zf9cDP", "token" => %{"spotify_access_token" => "BQBaQ04gdTM_JnSsmDkXFdkpqIvNRmMKQ5I8InwYW4o0LW2CLzbQc9eB7bJ4ZnGJbe6QVVIFAaMBzll9SIY8H7eVCCxipSIsoGc96Q6vl7M448jrT3SuoU5a1XwBemBgrcbW6NEMPAS_Jp9lP2pbd1u0Q1BoA_5k3uM2ZAEUeIlMep3bkvrjJqwZLVNQKNhesxB8S0khuey5V6oqlnLDOZ9fhX3h1g", "spotify_refresh_token" => "AQAMwauxHwYdAUcL9UGN89YAs4DvYXABk60_sXhLNanuW8nkRfNXPBXx1eZE42_6LApttdqwmCAK7HR75YI2uBTeZXQOQk13PBGWTKCd13YErTjZZm0SdVL3TroZPV4iJkw"}}, ref: "2", topic: "app:"}
+State: %Phoenix.Socket{assigns: %{}, channel: SpotifyDataVizWeb.AppChannel, channel_pid: #PID<0.436.0>, endpoint: SpotifyDataVizWeb.Endpoint, handler: SpotifyDataVizWeb.UserSocket, id: nil, join_ref: "1", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: SpotifyDataViz.PubSub, ref: nil, serializer: Phoenix.Transports.V2.WebSocketSerializer, topic: "app:", transport: Phoenix.Transports.WebSocket, transport_name: :websocket, transport_pid: #PID<0.434.0>, vsn: "2.0.0"}
 ```
