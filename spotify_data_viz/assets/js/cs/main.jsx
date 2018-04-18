@@ -46,7 +46,7 @@ function Site(props) {
         <Nav/>
         <Route path='/' exact={true} render={AppLinks}/>
         <Route path='/album_mood' exact={true} render={() => <AlbumMood channel={props.channel} token={props.token} />}/>
-        <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis/>}/>
+        <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis channel={props.channel} token={props.token} />}/>
     </div>)
 }
 
