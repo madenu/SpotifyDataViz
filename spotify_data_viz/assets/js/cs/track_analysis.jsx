@@ -7,7 +7,7 @@ export function TrackAnalysis(props) {
   width={500}
   height={500}
   padding={70}
-  domainMax={10}
+  domainMax={1}
   highlighted={null}
   onHover={(point) => {
     if (point) {
@@ -29,22 +29,11 @@ export function TrackAnalysis(props) {
         key: 'song1',
         label: 'Welcome to the Jungle',
         values: {
-          danceability: 2,
-          energy: 8,
-          tempo: 6, 
-          loudness: 8, 
-          speechiness: 7,
-        },
-      },
-      {
-        key: 'song2',
-        label: 'Levels',
-        values: {
-          danceability: 10,
-          energy: 8,
-          tempo: 8,
-          loudness: 7,
-          speechiness: 2,
+          danceability: .35,
+          energy: .8,
+          tempo: .6, 
+          loudness: .8, 
+          speechiness: .7,
         },
       },
     ],
