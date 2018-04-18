@@ -53,7 +53,7 @@ defmodule SpotifyDataViz.Utils do
     authorization = [{"Authorization", "Bearer #{token["access_token"]}"}]
 
     url = "https://api.spotify.com/v1/me/player/recently-played"
-    %{items: tracks} = HTTPoison.get(url, authorization)
+    tracks = HTTPoison.get(url, authorization)
 
     IO.inspect("tracks: ")
     IO.inspect(tracks)

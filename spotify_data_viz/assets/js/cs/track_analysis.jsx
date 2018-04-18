@@ -1,8 +1,26 @@
 import React from 'react';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import {Form} from 'reactstrap';
+import RadarChart from "./radar_spider_chart";
 
-export function TrackAnalysis(props) {
-  return (<h1>TRACK ANALYSIS</h1>)
+function TrackAnalysis(props) {
+    let token = props.token;
+
+    props.channel.join();
+    let recents = props.channel.push("recent_tracks", {token: token})
+
+    return (<div>
+        <div className="col-3">
+            <Form>
+                <select className="form-control">
+                    {recents}
+                </select>
+            </Form>
+        </div>
+        <div>
+            <RadarChart />
+        </div>
+    </div>);
 }
 
 function propsFromState(state) {
