@@ -1,6 +1,5 @@
 defmodule SpotifyDataViz.Utils do
-  alias Spotify.{Client, Credentials, Album, Track}
-  import Helpers
+  alias Spotify.{Credentials, Album, Track, Search}
 
   def userToken(token) do
     %Credentials{
@@ -32,6 +31,15 @@ defmodule SpotifyDataViz.Utils do
       end)
 
     %{album_name: album.name, album_tracks: tracks_af_combined}
+  end
+
+  def albumSearch(token, album_name) do
+    # create credential object for api requests
+    credentials = userToken(token)
+    # pull search results with api request
+    {:ok, %{items: albums}} = Search.query(credentials, q: album_name, type: "album")
+    # return a list of {name, id} tuples
+    Enum.map(albums, fn album -> %{name: album.name, id: album.id} end)
   end
 
   def trackAnalysis(token) do

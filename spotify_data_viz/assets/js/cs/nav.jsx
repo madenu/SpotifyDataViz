@@ -7,7 +7,9 @@ export default function Nav(props) {
   if (props.token) {
     session_info = <div className="navbar-text">
       <Form inline>
-        <Button color="danger">Log Out</Button>
+        <Button onClick={() => {
+            window.access_token = null
+            window.refresh_token = null}}  color="danger">Log Out</Button>
       </Form>
     </div>
 
