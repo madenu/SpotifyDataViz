@@ -20,6 +20,7 @@ let empty_album_mood = {
 
 function album_mood(state = empty_album_mood, action) {
   switch (action.type) {
+    case 'UPDATE_ALL':
     case 'UPDATE_ALBUM_MOOD':
       return Object.assign({}, state, action.data)
     default:
@@ -33,6 +34,7 @@ let empty_track_analysis = {
 
 function track_analysis(state = empty_track_analysis, action) {
   switch (action.type) {
+    case 'UPDATE_ALL':
     case 'UPDATE_TRACK_ANALYSIS':
       return Object.assign({}, state, action.data)
     default:

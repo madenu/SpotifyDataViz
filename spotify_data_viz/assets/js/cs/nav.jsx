@@ -6,7 +6,7 @@ export default function Nav(props) {
   let session_info
   if (props.token) {
     session_info = <div className="navbar-text">
-      <Form inline="inline">
+      <Form inline>
         <Button color="danger">Log Out</Button>
       </Form>
     </div>

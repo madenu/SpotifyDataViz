@@ -6,7 +6,7 @@ export function AlbumMood(props) {
   var token = props.token
 
   function getAlbum(album) {
-    props.channel.join()
+    console.log("getAlbum")
     props.channel.push("album_mood", {
       albumID: album,
       token: token

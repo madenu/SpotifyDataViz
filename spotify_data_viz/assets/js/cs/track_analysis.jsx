@@ -6,7 +6,7 @@ export function TrackAnalysis(props) {
     var token = props.token
 
     function getTracks() {
-        props.channel.join()
+        console.log("getTracks")
         props.channel.push("track_analysis", {token: token})
     }
 

@@ -9,8 +9,9 @@ import TrackAnalysis from './track_analysis'
 import AlbumMood from './album_mood'
 
 export default function main_init(root, store, channel) {
+  var token = {spotify_access_token: window.access_token, spotify_refresh_token: window.refresh_token}
   ReactDOM.render(<Provider store={store}>
-    <Main channel={channel} token={window.access_token}/>
+    <Main channel={channel} token={token}/>
   </Provider>, root)
 }
 
@@ -40,7 +41,6 @@ function Site(props) {
     </div>)
   }
 
-  console.log("Site", props)
   return (<div>
     <Nav token={props.token}/>
     <Route path='/' exact={true} render={AppLinks}/>
@@ -50,14 +50,25 @@ function Site(props) {
 }
 
 function Main(props) {
-  props.channel.on("album_mood:", (data) => {
-    console.log(data)
+  props.channel.join().receive("ok", resp => {
+    console.log("Joined successfully", resp)
+  }).receive("error", resp => {
+    console.log("Unable to join", resp)
+  })
+
+  props.channel.on("update_album_mood:", (data) => {
+    console.log("update_album_mood", data)
     store.dispatch({type: "UPDATE_ALBUM_MOOD", data: data})
   })
 
-  props.channel.on("track_analysis:", (data) => {
-    console.log(data)
+  props.channel.on("update_track_analysis:", (data) => {
+    console.log("update_track_analysis", data)
     store.dispatch({type: "UPDATE_TRACK_ANALYSIS", data: data})
+  })
+
+  props.channel.on("update_all:", (data) => {
+    console.log("update_all", data)
+    store.dispatch({type: "UPDATE_ALL", data: data})
   })
 
   let page = null
