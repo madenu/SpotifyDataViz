@@ -1,8 +1,5 @@
-import {
-  createStore,
-  combineReducers
-} from 'redux';
-import deepFreeze from 'deep-freeze';
+import {createStore, combineReducers} from 'redux'
+import deepFreeze from 'deep-freeze'
 
 /*
 STATE LAYOUT
@@ -14,11 +11,6 @@ STATE LAYOUT
   track_analysis: {
     recent_tracks: List<(Title, {Audio Features})>
   }
-  user_token: {
-    spotify_access_token: String,
-    spotify_refresh_token: String
-  }
-}
 */
 
 let empty_album_mood = {
@@ -48,25 +40,15 @@ function track_analysis(state = empty_track_analysis, action) {
   }
 }
 
-function user_token(state = null, action) {
-  switch (action.type) {
-    case 'UPDATE_USER_TOKEN':
-      console.log("action.data ", action.data)
-      return action.data
-    default:
-      return state
-  }
-}
 
 function root_reducer(state, action) {
   let reducer = combineReducers({
     album_mood,
     track_analysis,
-    user_token
-  });
-  state = reducer(state, action);
-  return deepFreeze(state);
-};
+  })
+  state = reducer(state, action)
+  return deepFreeze(state)
+}
 
-let store = createStore(root_reducer);
-export default store;
+let store = createStore(root_reducer)
+export default store

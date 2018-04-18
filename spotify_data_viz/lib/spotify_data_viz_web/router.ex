@@ -18,13 +18,15 @@ defmodule SpotifyDataVizWeb.Router do
     pipe_through(:browser)
 
     get("/", PageController, :index)
-    get("/profile", ProfileController, :index)
-    get("/authorize", AuthorizationController, :authorize)
-    get("/authenticate", AuthenticationController, :authenticate)
+    get("/album_mood", PageController, :index)
+    get("/track_analysis", PageController, :index)
+
+    get("/authorize", PageController, :authorize)
+    get("/authenticate", PageController, :authenticate)
   end
 
   # Other scopes may use custom stacks.
-  #scope "/api/v1/", SpotifyDataVizWeb do
+  # scope "/api/v1/", SpotifyDataVizWeb do
   #  pipe_through(:api)
-  #end
+  # end
 end
