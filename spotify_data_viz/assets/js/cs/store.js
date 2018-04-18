@@ -11,17 +11,35 @@ STATE LAYOUT
   track_analysis: {
     recent_tracks: List<(Title, {Audio Features})>
   }
+  album_search: {
+    query: String,
+    results, List<{name: String, id: String}>
+  }
+}
 */
 
 let empty_album_mood = {
   album_name: "",
-  album_tracks: []
+  album_tracks: [],
 }
 
 function album_mood(state = empty_album_mood, action) {
   switch (action.type) {
-    case 'UPDATE_ALL':
     case 'UPDATE_ALBUM_MOOD':
+      return Object.assign({}, state, action.data)
+    default:
+      return state
+  }
+}
+
+let empty_album_search = {
+  query: "",
+  results: []
+}
+
+function album_search(state = empty_album_search, action) {
+  switch (action.type) {
+    case 'UPDATE_ALBUM_SEARCH':
       return Object.assign({}, state, action.data)
     default:
       return state
@@ -34,7 +52,6 @@ let empty_track_analysis = {
 
 function track_analysis(state = empty_track_analysis, action) {
   switch (action.type) {
-    case 'UPDATE_ALL':
     case 'UPDATE_TRACK_ANALYSIS':
       return Object.assign({}, state, action.data)
     default:
@@ -46,6 +63,7 @@ function track_analysis(state = empty_track_analysis, action) {
 function root_reducer(state, action) {
   let reducer = combineReducers({
     album_mood,
+    album_search,
     track_analysis,
   })
   state = reducer(state, action)
