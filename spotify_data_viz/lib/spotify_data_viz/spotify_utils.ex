@@ -62,6 +62,9 @@ defmodule SpotifyDataViz.Utils do
         Map.merge(k, Enum.find(tracks, fn x -> x.id == k.id end))
       end)
 
-    %{recent_tracks: tracks_af_combined}
+    recents = Enum.map(tracks_af_combined, fn(t) ->
+      %{name: t.name, id: t.id, features: %{dance: t.danceability, energy: t.energy, instrumentalness: t.instrumentalness, speechiness: t.speechiness, valence: t.valence}} end)
+
+    %{recent_tracks: recents}
   end
 end
