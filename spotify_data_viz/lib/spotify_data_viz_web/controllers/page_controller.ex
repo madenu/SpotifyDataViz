@@ -14,7 +14,7 @@ defmodule SpotifyDataVizWeb.PageController do
       {:ok, conn} ->
         render(conn, "index.html", token: Spotify.Credentials.new(conn))
 
-      {:error, reason, conn} ->
+      {:error, _reason, conn} ->
         redirect(conn, to: "/error")
     end
   end

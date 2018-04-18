@@ -1,12 +1,13 @@
 import React from 'react'
 import Plot from 'react-plotly.js'
 import {connect} from 'react-redux'
+import AlbumSearch from './album_search'
 
 export function AlbumMood(props) {
   var token = props.token
 
   function getAlbum(album) {
-    console.log("getAlbum")
+    console.log("getAlbum", album)
     props.channel.push("album_mood", {
       albumID: album,
       token: token
@@ -33,9 +34,7 @@ export function AlbumMood(props) {
       ]} layout={{
         title: 'A Fancy Plot'
       }}/>
-    <div id="side-0" className="side col">
-      <button id={"ok"} className={"btn btn-primary"} onClick={() => getAlbum("1WBZyULtlANBKed7Zf9cDP")}>Get Album</button>
-    </div>
+    <AlbumSearch token={props.token} channel={props.channel}/>
   </div>)
 }
 
