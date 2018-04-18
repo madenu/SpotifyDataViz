@@ -56,21 +56,6 @@ function Main(props) {
     console.log("Unable to join", resp)
   })
 
-  props.channel.on("update_album_mood:", (data) => {
-    console.log("update_album_mood", data)
-    store.dispatch({type: "UPDATE_ALBUM_MOOD", data: data})
-  })
-
-  props.channel.on("update_track_analysis:", (data) => {
-    console.log("update_track_analysis", data)
-    store.dispatch({type: "UPDATE_TRACK_ANALYSIS", data: data})
-  })
-
-  props.channel.on("update_all:", (data) => {
-    console.log("update_all", data)
-    store.dispatch({type: "UPDATE_ALL", data: data})
-  })
-
   let page = null
 
   if (window.access_token) {

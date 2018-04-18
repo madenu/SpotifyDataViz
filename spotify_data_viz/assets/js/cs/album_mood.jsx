@@ -10,7 +10,9 @@ export function AlbumMood(props) {
     props.channel.push("album_mood", {
       albumID: album,
       token: token
-    })
+    }).receive("ok", (data) => {
+      console.log("update_album_mood", data)
+      props.dispatch({type: "UPDATE_ALBUM_MOOD", data: data})})
   }
 
   return (<div>
