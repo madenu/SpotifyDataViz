@@ -5,10 +5,10 @@ import RadarChart from "./radar_spider_chart";
 
 function TrackAnalysis(props) {
     let token = props.token;
-
+    let recents = null;
     function getTracks() {
         props.channel.join()
-        let recents = props.channel.push("track_analysis", {token: token})
+        recents = props.channel.push("track_analysis", {token: token})
     }
 
     return (<div>

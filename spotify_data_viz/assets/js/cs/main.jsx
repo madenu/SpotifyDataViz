@@ -57,8 +57,6 @@ let Main = connect((state) => state)((props) => {
     //    console.log("Unable to join", resp)
     //})
 
-
-
     props.channel.on("album_mood:", (data) => {
         console.log(data)
         store.dispatch({type: "UPDATE_ALBUM_MOOD", data: data})
@@ -79,9 +77,7 @@ let Main = connect((state) => state)((props) => {
         spotify_access_token: window.access_token,
         spotify_refresh_token: window.refresh_token
     }
-    console.log(user_token)
-
-
+    console.log("Main token", user_token)
 
     if (window.access_token) {
         page = <Site channel={props.channel} token={user_token}/>;
@@ -90,8 +86,6 @@ let Main = connect((state) => state)((props) => {
             <a href="http://localhost:4000/authorize" className='btn btn-success'>Log In with Spotify</a>
         </div>;
     }
-
-
 
     return (<Router>
         <div>

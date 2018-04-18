@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 
 function RadarChart(props) {
-
+    return <div></div>;
 }
 
 function props_to_state(state) {

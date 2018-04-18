@@ -44,21 +44,22 @@ defmodule SpotifyDataViz.Utils do
   end
 
   def trackAnalysis(state, token) do
+    conn = userToken(token)
+
     #pull users recent tracks
     url = "https://api.spotify.com/v1/me/player/recently-played"
     query = HTTPoison.get(url, [{"Authorization", "Bearer #{token["spotify_access_token"]}"}])
     {:ok, %HTTPoison.Response{status_code: _code, body: body}} = query
 
     tracks = Poison.decode!(body)["items"]
-
+    IO.inspect(tracks)
     #create list of track ids for audio_features request
     track_ids = Enum.map(tracks, fn(k) -> k["track"]["id"] end)
                 |> Enum.join(",")
-
-    conn = userToken(token)
+    IO.inspect(track_ids)
     #to create track objects using spotify_ex (since not returned as track objects from recently played pull)
     {:ok, tracks} = Track.get_tracks(conn, ids: track_ids)
-
+    IO.inspect(tracks)
     #pull audio features with api request
     {:ok, audio_features } = Track.audio_features(conn, ids: track_ids)
 
