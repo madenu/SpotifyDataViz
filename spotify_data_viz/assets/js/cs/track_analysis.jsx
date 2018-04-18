@@ -6,10 +6,16 @@ import RadarChart from "./radar_spider_chart";
 function TrackAnalysis(props) {
     let token = props.token;
 
-    props.channel.join();
-    let recents = props.channel.push("recent_tracks", {token: token})
+    function getTracks() {
+        props.channel.join()
+        let recents = props.channel.push("track_analysis", {token: token})
+    }
 
     return (<div>
+        <div id="side-0" className="side col">
+            <button id={"ok"} className={"btn btn-primary"} onClick={() => getTracks()}>Get Tracks</button>
+        </div>
+        <h1>TRACK ANALYSIS</h1>
         <div className="col-3">
             <Form>
                 <select className="form-control">
@@ -24,7 +30,7 @@ function TrackAnalysis(props) {
 }
 
 function propsFromState(state) {
-  return {track_analysis: state.track_analysis}
+    return {track_analysis: state.track_analysis}
 }
 
 export default connect(propsFromState)(TrackAnalysis)
