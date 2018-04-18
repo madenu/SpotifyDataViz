@@ -52,14 +52,14 @@ defmodule SpotifyDataViz.Utils do
     {:ok, %HTTPoison.Response{status_code: _code, body: body}} = query
 
     tracks = Poison.decode!(body)["items"]
-    IO.inspect(tracks)
+
     #create list of track ids for audio_features request
     track_ids = Enum.map(tracks, fn(k) -> k["track"]["id"] end)
                 |> Enum.join(",")
-    IO.inspect(track_ids)
+
     #to create track objects using spotify_ex (since not returned as track objects from recently played pull)
     {:ok, tracks} = Track.get_tracks(conn, ids: track_ids)
-    IO.inspect(tracks)
+
     #pull audio features with api request
     {:ok, audio_features } = Track.audio_features(conn, ids: track_ids)
 
@@ -67,10 +67,13 @@ defmodule SpotifyDataViz.Utils do
     tracks_af_combined = Enum.map(audio_features, fn(k) ->
       Map.merge(k, Enum.find(tracks, fn (x) -> x.id == k.id end)) end)
 
+    recents = Enum.map(tracks_af_combined, fn(t) ->
+      %{name: t.name, id: t.id, features: %{dance: t.danceability, energy: t.energy, instrumentalness: t.instrumentalness, speechiness: t.speechiness, valence: t.valence}} end)
+
     #return state with updated album_mood from request
     %{
       album_mood: state.album_mood,
-      track_analysis: %{recent_tracks: tracks_af_combined},
+      track_analysis: %{recent_tracks: recents},
       user_token: state.user_token
     }
   end

@@ -9,6 +9,7 @@ function TrackAnalysis(props) {
     function getTracks() {
         props.channel.join()
         recents = props.channel.push("track_analysis", {token: token})
+        console.log("Recents", recents);
     }
 
     return (<div>

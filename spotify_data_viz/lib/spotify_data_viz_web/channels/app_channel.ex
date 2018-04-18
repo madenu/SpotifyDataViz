@@ -22,7 +22,6 @@ defmodule SpotifyDataVizWeb.AppChannel do
 
   def handle_in("track_analysis", %{"token" => token}, socket) do
     app = Utils.trackAnalysis(socket.assigns[:app], token)
-    IO.inspect(app)
     socket = assign(socket, :app, app)
     {:reply, {:ok, %{ "app" => app}}, socket}
   end
