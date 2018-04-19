@@ -3,13 +3,12 @@ import {NavLink} from 'react-router-dom'
 import {Form, Button, NavItem} from 'reactstrap'
 
 export default function Nav(props) {
+
   let session_info
   if (props.token) {
     session_info = <div className="navbar-text">
       <Form inline>
-        <Button onClick={() => {
-            window.access_token = null
-            window.refresh_token = null}} href={"../"} color="danger">Log Out</Button>
+        <Button href="/logout" color="danger">Log Out</Button>
       </Form>
     </div>
 

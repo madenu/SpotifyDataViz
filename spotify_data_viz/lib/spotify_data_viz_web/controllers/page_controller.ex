@@ -4,14 +4,21 @@ defmodule SpotifyDataVizWeb.PageController do
   alias SpotifyDataViz.SoSpotifyDB
   alias SpotifyDataViz.Users
 
+  def logout(conn, _params) do
+    conn
+    |> Plug.Conn.delete_resp_cookie("spotify_refresh_token")
+    |> Plug.Conn.delete_resp_cookie("spotify_access_token")
+    |> render("index.html", token: %{refresh_token: "",access_token: ""}, user: 0)
+  end
+
   def index(conn, _params) do
-    profileID = 0
-
-    {:ok, profile} = Spotify.Profile.me(conn)
-
-    profileID = if (!Map.has_key?(profile, "error")) do
-                  profileID(conn)
-                end
+    profileID =
+      case Spotify.Profile.me(conn) do
+        {:ok, %{"error" => _msg_dict}} ->
+          0
+        {:ok, profile} ->
+          profile.id
+      end
 
     render(conn, "index.html", token: Spotify.Credentials.new(conn), user: profileID)
   end

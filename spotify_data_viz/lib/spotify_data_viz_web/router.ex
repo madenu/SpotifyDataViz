@@ -20,6 +20,7 @@ defmodule SpotifyDataVizWeb.Router do
     get("/", PageController, :index)
     get("/album_mood", PageController, :index)
     get("/track_analysis", PageController, :index)
+    get("/logout", PageController, :logout)
 
     get("/authorize", PageController, :authorize)
     get("/authenticate", PageController, :authenticate)

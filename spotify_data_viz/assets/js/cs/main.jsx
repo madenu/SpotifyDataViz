@@ -37,5 +37,9 @@ function Main(props) {
     }
     return page
   }
-  return (<Router><LandingPage/></Router>)
+  return (<Router><div><LandingPage/>
+      <Route path='/album_mood' exact={true} render={() => <AlbumMood channel={props.channel} token={props.token}/>}/>
+      <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis channel={props.channel} token={props.token}/>}/>
+  </div>
+  </Router>)
 }
