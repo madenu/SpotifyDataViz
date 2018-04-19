@@ -5,7 +5,14 @@ defmodule SpotifyDataVizWeb.PageController do
   alias SpotifyDataViz.Users
 
   def index(conn, _params) do
-    render(conn, "index.html", token: Spotify.Credentials.new(conn), user: profileID(conn))
+    profileID = 0
+    case Spotify.Profile.me(conn) do
+      {:ok, profile} ->
+        profileID = profile.id
+      {:error, profile} ->
+        profileID = 0
+    end
+    render(conn, "index.html", token: Spotify.Credentials.new(conn), user: profileID)
   end
 
   def authorize(conn, _params) do

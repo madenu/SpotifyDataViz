@@ -27,9 +27,28 @@ export default function main_init(root, store, channel) {
 function Site(props) {
   function AppLinks() {
 
+    var albumList = props.album_list
+    var albumListLength = albumList.length
+
+      var albumArray = []
+
+      if (albumListLength > 5) {
+      albumListLength = 10
+      }
+
+      for (var i = 0; i < albumListLength; i++) {
+          albumArray[i] =
+              <div className="card">
+                <div className="card-body">
+                    <p><b>{albumList[i].album_name}</b></p>
+                    {albumList[i].artist_name}
+                </div>
+              </div>
+      }
+
     return (<div>
       <div className="card" style={{
-          width: "18rem"
+          width: "18rem", float: "left"
         }}>
         <img className="card-img-top" src="http://via.placeholder.com/100x100" alt="Card image cap"/>
         <div className="card-body">
@@ -39,7 +58,7 @@ function Site(props) {
         </div>
       </div>
       <div className="card" style={{
-          width: "18rem"
+          width: "18rem", float: "left"
         }}>
         <img className="card-img-top" src="http://via.placeholder.com/100x100" alt="Card image cap"/>
         <div className="card-body">
@@ -48,6 +67,17 @@ function Site(props) {
           <Link to={"/track_analysis"} className="btn btn-primary">GO!</Link>
         </div>
       </div>
+        <div className="card">
+          <div className="card-body">
+          <h5 className="card-title">Top Album Searches</h5>
+          </div>
+        </div>
+        {albumArray[0]}
+        {albumArray[1]}
+        {albumArray[2]}
+        {albumArray[3]}
+        {albumArray[4]}
+        {albumArray[5]}
     </div>)
   }
 
@@ -62,19 +92,17 @@ function Site(props) {
 let Main = connect((state) => state)((props) => {
 
     let user = window.user_id
-    console.log(user)
-    console.log(props)
+
     console.log("user_list")
     console.log(props.user_list)
-    console.log("album_list")
-    console.log(props.album_list)
+
 
 
   function LandingPage() {
     let page = null
 
     if (user != 0) {
-      page = <Site channel={props.channel} token={props.token} />
+      page = <Site channel={props.channel} token={props.token} album_list={props.album_list}/>
     } else {
       page = <div id="login">
         <a href="/authorize" className='btn btn-success'>Log In with Spotify</a>
