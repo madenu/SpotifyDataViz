@@ -8,29 +8,44 @@ defmodule SpotifyDataViz.Utils do
     }
   end
 
+  def combine([], []), do: []
+
+  def combine(tracks, features) do
+    [track | tracks] = tracks
+    [feature | features] = features
+    first = %{name: track.name, valence: feature.valence, tempo: feature.tempo}
+    [first | combine(tracks, features)]
+  end
+
   def albumMood(token, album_id) do
     # create credential object for api requests
     credentials = userToken(token)
 
-    # pull album and tracks with api request
     {:ok, album} = Album.get_album(credentials, album_id)
     {:ok, %{items: tracks}} = Album.get_album_tracks(credentials, album_id)
 
-    # create list of track ids for audio_features request
-    track_ids =
-      Enum.map(tracks, fn k -> k.id end)
-      |> Enum.join(",")
+    {:ok, audio_features} =
+      Track.audio_features(
+        credentials,
+        ids: tracks |> Enum.map(fn track -> track.id end) |> Enum.join(",")
+      )
 
-    # pull audio features with api request
-    {:ok, audio_features} = Track.audio_features(credentials, ids: track_ids)
-
-    # merge tracks + af (necessary as tracks and audio features are separate map arrays)
-    tracks_af_combined =
-      Enum.map(audio_features, fn k ->
-        Map.merge(k, Enum.find(tracks, fn x -> x.id == k.id end))
-      end)
-
+    tracks_af_combined = combine(tracks, audio_features)
     %{album_name: album.name, album_tracks: tracks_af_combined}
+  end
+
+  def helpGetArtistStrings([]), do: ""
+
+  def helpGetArtistStrings(artists) do
+    [first | rest] = artists
+    ", " <> first["name"] <> helpGetArtistStrings(rest)
+  end
+
+  def getArtistStrings([]), do: ""
+
+  def getArtistStrings(artists) do
+    [first | rest] = artists
+    first["name"] <> helpGetArtistStrings(rest)
   end
 
   def albumSearch(token, album_name) do
@@ -39,7 +54,9 @@ defmodule SpotifyDataViz.Utils do
     # pull search results with api request
     {:ok, %{items: albums}} = Search.query(credentials, q: album_name, type: "album")
     # return a list of {name, id} tuples
-    Enum.map(albums, fn album -> %{name: album.name, id: album.id} end)
+    Enum.map(albums, fn album ->
+      %{name: album.name, artists: getArtistStrings(album.artists), id: album.id}
+    end)
   end
 
   def trackAnalysis(token) do
@@ -70,8 +87,20 @@ defmodule SpotifyDataViz.Utils do
         Map.merge(k, Enum.find(tracks, fn x -> x.id == k.id end))
       end)
 
-    recents = Enum.map(tracks_af_combined, fn(t) ->
-      %{name: t.name, id: t.id, features: %{dance: t.danceability, energy: t.energy, instrumentalness: t.instrumentalness, speechiness: t.speechiness, valence: t.valence}} end)
+    recents =
+      Enum.map(tracks_af_combined, fn t ->
+        %{
+          name: t.name,
+          id: t.id,
+          features: %{
+            dance: t.danceability,
+            energy: t.energy,
+            instrumentalness: t.instrumentalness,
+            speechiness: t.speechiness,
+            valence: t.valence
+          }
+        }
+      end)
 
     %{recent_tracks: recents}
   end
