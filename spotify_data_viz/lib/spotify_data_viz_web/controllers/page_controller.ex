@@ -6,12 +6,15 @@ defmodule SpotifyDataVizWeb.PageController do
 
   def index(conn, _params) do
     profileID = 0
+
     case Spotify.Profile.me(conn) do
+      {:ok, %{"error" => _message}} ->
+        profileID = 0
+
       {:ok, profile} ->
         profileID = profile.id
-      {:error, profile} ->
-        profileID = 0
     end
+
     render(conn, "index.html", token: Spotify.Credentials.new(conn), user: profileID)
   end
 
@@ -34,14 +37,23 @@ defmodule SpotifyDataVizWeb.PageController do
     token = Spotify.Credentials.new(conn)
     current_user = Users.get_user_by_id(profileID(conn))
 
-    if (current_user) do
+    if current_user do
       IO.inspect("Updating user with new token")
-      Users.update_user(current_user, %{access_token: token.access_token,
-        refresh_token: token.refresh_token, timestamp: DateTime.utc_now})
+
+      Users.update_user(current_user, %{
+        access_token: token.access_token,
+        refresh_token: token.refresh_token,
+        timestamp: DateTime.utc_now()
+      })
     else
       IO.inspect("Creating user with new token")
-      Users.create_user(%{user_id: profileID(conn), access_token: token.access_token,
-        refresh_token: token.refresh_token, timestamp: DateTime.utc_now})
+
+      Users.create_user(%{
+        user_id: profileID(conn),
+        access_token: token.access_token,
+        refresh_token: token.refresh_token,
+        timestamp: DateTime.utc_now()
+      })
     end
   end
 
