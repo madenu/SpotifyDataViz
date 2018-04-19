@@ -90,7 +90,7 @@ export function AlbumMood(props) {
     <div>
       <Form>
         <Label for='album'>Album Name</Label>
-        <Input name='album' type='text' value={props.album_search.query} onChange={update}/>
+        <Input autoFocus name='album' type='text' value={props.album_search.query} onChange={update}/>
         <Button className={"btn btn-primary"} onClick={searchAlbum}>Search</Button>
       </Form>
       <ul>{results}</ul>

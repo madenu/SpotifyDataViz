@@ -17,7 +17,7 @@
 * **DEPLOY (JJ and MD each in parallel)**
 * ~~Normalize tempo~~
 * ~~Make selection in track analysis sticky (add selected to track_analysis state)~~
-* ~~Add artist name for tracks
+* ~~Add artist name for tracks~~
 * ~~Show title and artist as heading for radar chart in track analysis~~
 * ~~Fix spacing and layout of track analysis~~
 * Fix spacing and layout of album mood
