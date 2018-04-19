@@ -7,13 +7,11 @@ defmodule SpotifyDataVizWeb.PageController do
   def index(conn, _params) do
     profileID = 0
 
-    case Spotify.Profile.me(conn) do
-      {:ok, %{"error" => _message}} ->
-        profileID = 0
+    {:ok, profile} = Spotify.Profile.me(conn)
 
-      {:ok, profile} ->
-        profileID = profile.id
-    end
+    profileID = if (!Map.has_key?(profile, "error")) do
+                  profileID(conn)
+                end
 
     render(conn, "index.html", token: Spotify.Credentials.new(conn), user: profileID)
   end
