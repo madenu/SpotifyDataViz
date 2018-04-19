@@ -37,6 +37,10 @@ defmodule SpotifyDataViz.SoSpotifyDB do
   """
   def get_album!(id), do: Repo.get!(Album, id)
 
+  def get_album_by_id(id) do
+    Repo.get_by(Album, album_id: id)
+  end
+
   @doc """
   Creates a album.
 
