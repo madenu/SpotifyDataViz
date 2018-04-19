@@ -15,6 +15,7 @@
 ## TODO
 * **FINISH THE REPORT**
 * **DEPLOY (JJ and MD each in parallel)**
+* ~~Normalize tempo~~
 * Make selection in track analysis sticky (add selected to track_analysis state)
 * Add artist name for tracks
 * Show title and artist as heading for radar chart in track analysis
@@ -25,6 +26,7 @@
 * Fix logout button
   * May need to delete cookie from browser
   * https://stackoverflow.com/questions/179355/clearing-all-cookies-with-javascript
+* Fix form focus for album mood
 * ~~Get radar chart working~~
 * ~~Plot a sample album mood~~
 * ~~Delete stuff associated with user token from redux state on server side~~

@@ -79,7 +79,7 @@ export function AlbumMood(props) {
           y: props.album_mood.album_tracks.map(x => x.tempo),
           type: 'scatter',
           mode: 'lines',
-          name: 'tempo',
+          name: 'tempo (normalized)',
           marker: {
             color: 'green'
           }

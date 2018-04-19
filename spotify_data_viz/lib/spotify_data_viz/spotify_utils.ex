@@ -10,25 +10,34 @@ defmodule SpotifyDataViz.Utils do
   end
 
   def updateAlbumsDB(album_id, album) do
-
     album_record = SoSpotifyDB.get_album_by_id(album_id)
-    artist = Map.get(Enum.fetch!(album.artists,0), "name")
+    artist = Map.get(Enum.fetch!(album.artists, 0), "name")
 
-    if (album_record) do
-      SoSpotifyDB.update_album(album_record, %{times_searched: (album_record.times_searched + 1)})
+    if album_record do
+      SoSpotifyDB.update_album(album_record, %{times_searched: album_record.times_searched + 1})
     else
-      SoSpotifyDB.create_album(%{album_id: album_id, album_name: album.name, artist_name: artist, times_searched: 1})
+      SoSpotifyDB.create_album(%{
+        album_id: album_id,
+        album_name: album.name,
+        artist_name: artist,
+        times_searched: 1
+      })
     end
-
   end
 
-  def combine([], []), do: []
+  def combine([], [], _max_tempo), do: []
 
-  def combine(tracks, features) do
+  def combine(tracks, features, max_tempo) do
     [track | tracks] = tracks
     [feature | features] = features
-    first = %{name: track.name, valence: feature.valence, tempo: feature.tempo}
-    [first | combine(tracks, features)]
+    first = %{name: track.name, valence: feature.valence, tempo: feature.tempo / max_tempo}
+    [first | combine(tracks, features, max_tempo)]
+  end
+
+  def normalizeCombine(tracks, features) do
+    max_tempo_feat = Enum.max_by(features, fn feat -> feat.tempo end)
+    max_tempo = max_tempo_feat.tempo
+    combine(tracks, features, max_tempo)
   end
 
   def albumMood(token, album_id) do
@@ -46,7 +55,7 @@ defmodule SpotifyDataViz.Utils do
 
     updateAlbumsDB(album_id, album)
 
-    tracks_af_combined = combine(tracks, audio_features)
+    tracks_af_combined = normalizeCombine(tracks, audio_features)
     %{album_name: album.name, album_tracks: tracks_af_combined}
   end
 
