@@ -1,11 +1,25 @@
 defmodule SpotifyDataViz.Utils do
   alias Spotify.{Credentials, Album, Track, Search}
+  alias SpotifyDataViz.SoSpotifyDB
 
   def userToken(token) do
     %Credentials{
       access_token: token["spotify_access_token"],
       refresh_token: token["spotify_refresh_token"]
     }
+  end
+
+  def updateAlbumsDB(album_id, album) do
+
+    album_record = SoSpotifyDB.get_album_by_id(album_id)
+    artist = Map.get(Enum.fetch!(album.artists,0), "name")
+
+    if (album_record) do
+      SoSpotifyDB.update_album(album_record, %{times_searched: (album_record.times_searched + 1)})
+    else
+      SoSpotifyDB.create_album(%{album_id: album_id, album_name: album.name, artist_name: artist, times_searched: 1})
+    end
+
   end
 
   def combine([], []), do: []
@@ -29,6 +43,8 @@ defmodule SpotifyDataViz.Utils do
         credentials,
         ids: tracks |> Enum.map(fn track -> track.id end) |> Enum.join(",")
       )
+
+    updateAlbumsDB(album_id, album)
 
     tracks_af_combined = combine(tracks, audio_features)
     %{album_name: album.name, album_tracks: tracks_af_combined}

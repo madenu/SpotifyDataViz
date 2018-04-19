@@ -22,9 +22,15 @@ import "phoenix_html";
 import store from "./cs/store";
 import main_init from "./cs/main";
 import socket from "./socket"
+import api from './api';
+
+
 
 $(function() {
     let channel = socket.channel("app:", {});
     let root = document.getElementById('root');
+    api.request_albums();
+    api.request_users();
+    //while (store.getState().user_list.length == 0) {}
     main_init(root, store, channel);
 });

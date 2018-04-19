@@ -1,6 +1,7 @@
 <script>
 window.access_token = "<%= @token.access_token %>";
 window.refresh_token = "<%= @token.refresh_token %>";
+window.user_id = "<%= @user %>";
 </script>
 
 <div id="root">
