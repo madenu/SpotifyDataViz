@@ -25,7 +25,6 @@ export default function main_init(root, store, channel) {
   </Provider>, root)
 }
 
-
 function Main(props) {
   function LandingPage() {
     let page = null

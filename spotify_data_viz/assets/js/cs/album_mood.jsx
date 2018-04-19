@@ -63,7 +63,10 @@ export function AlbumMood(props) {
     </CardBody>
   </Card>)
 
-  return (<div>
+  var WIDTH_IN_PERCENT_OF_PARENT = 60,
+    HEIGHT_IN_PERCENT_OF_PARENT = 80;
+
+  return (<div id="AlbumMood">
     <Plot data={[
         {
           x: props.album_mood.album_tracks.map(x => x.name),
@@ -85,6 +88,12 @@ export function AlbumMood(props) {
           }
         }
       ]} layout={{
+        width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+        'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
+
+        height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
+        'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh',
+
         title: props.album_mood.album_name
       }}/>
     <div>

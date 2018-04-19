@@ -11,7 +11,9 @@ function Site(props) {
   function AppLinks() {
     var albumArray = []
     var albumList = props.album_list
-    var albumListLength = 5
+    var albumListLength = Math.min(4, Math.max(0, props.album_list.length))
+
+    console.log(albumList)
 
     for (var i = 0; i < albumListLength; i++) {
       albumArray[i] = <div className="card">
