@@ -31,7 +31,7 @@ function Site(props) {
           width: "18rem",
           float: "left"
         }}>
-        <img className="card-img-top" src="http://via.placeholder.com/100x100" alt="Card image cap"/>
+        <img className="card-img-top" src="/images/album-mood.png" alt="Card image cap"/>
         <div className="card-body">
           <h5 className="card-title">Album Mood</h5>
           <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -42,7 +42,7 @@ function Site(props) {
           width: "18rem",
           float: "left"
         }}>
-        <img className="card-img-top" src="http://via.placeholder.com/100x100" alt="Card image cap"/>
+        <img className="card-img-top" src="/images/track-analysis.png" alt="Card image cap"/>
         <div className="card-body">
           <h5 className="card-title">Track Analysis</h5>
           <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
