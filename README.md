@@ -16,10 +16,10 @@
 * **FINISH THE REPORT**
 * **DEPLOY (JJ and MD each in parallel)**
 * ~~Normalize tempo~~
-* Make selection in track analysis sticky (add selected to track_analysis state)
-* Add artist name for tracks
-* Show title and artist as heading for radar chart in track analysis
-* Fix spacing and layout of track analysis
+* ~~Make selection in track analysis sticky (add selected to track_analysis state)~~
+* ~~Add artist name for tracks
+* ~~Show title and artist as heading for radar chart in track analysis~~
+* ~~Fix spacing and layout of track analysis~~
 * Fix spacing and layout of album mood
 * Put finishing touches on main page
 * Fix the redirect after authentication (the page is blank but Nav is there)

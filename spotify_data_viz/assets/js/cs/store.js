@@ -17,6 +17,7 @@ STATE LAYOUT
   }
   track_analysis: {
     recent_tracks: List<{name: String,
+      artists: String,
       features: {valence: Number,
                  instrumentalness: Number,
                  speechiness: Number,
@@ -79,6 +80,7 @@ function track_analysis(state = empty_track_analysis, action) {
 }
 
 let empty_radar = {
+    title: "",
     danceability: 0,
     energy: 0,
     valence: 0,

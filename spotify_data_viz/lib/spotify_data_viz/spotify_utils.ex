@@ -116,6 +116,7 @@ defmodule SpotifyDataViz.Utils do
       Enum.map(tracks_af_combined, fn t ->
         %{
           name: t.name,
+          artists: t.artists |> getArtistStrings,
           id: t.id,
           features: %{
             dance: t.danceability,
