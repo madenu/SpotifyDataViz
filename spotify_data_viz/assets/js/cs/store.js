@@ -59,12 +59,29 @@ function track_analysis(state = empty_track_analysis, action) {
   }
 }
 
+let empty_radar = {
+    danceability: 0,
+    energy: 0,
+    valence: 0,
+    instrumentalness: 0,
+    speechiness: 0
+}
+
+function radar_chart(state = empty_radar, action) {
+    switch(action.type) {
+        case 'UPDATE_RADAR':
+            return Object.assign({}, state, action.data)
+        default:
+            return state
+    }
+}
 
 function root_reducer(state, action) {
   let reducer = combineReducers({
     album_mood,
     album_search,
     track_analysis,
+    radar_chart,
   })
   state = reducer(state, action)
   return deepFreeze(state)
