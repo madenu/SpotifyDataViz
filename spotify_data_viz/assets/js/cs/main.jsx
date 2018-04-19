@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import Nav from './nav'
 import TrackAnalysis from './track_analysis'
 import AlbumMood from './album_mood'
-import Site from './site'
+import AppLinks from './app_links'
 
 export default function main_init(root, store, channel) {
   var token = {
@@ -26,16 +26,17 @@ export default function main_init(root, store, channel) {
 }
 
 function Main(props) {
-  function LandingPage() {
-    let page = null
     if (props.token.user_id != 0) {
-      page = <Site channel={props.channel} token={props.token}/>
+      return (<Router>
+        <div>
+          <Nav token={props.token}/>
+          <Route path='/' exact={true} render={() => <AppLinks />}/>
+          <Route path='/album_mood' exact={true} render={() => <AlbumMood channel={props.channel} token={props.token}/>}/>
+          <Route path='/track_analysis' exact={true} render={() => <TrackAnalysis channel={props.channel} token={props.token}/>}/></div>
+      </Router>)
     } else {
-      page = <div id="login">
+      return (<div id="login">
         <a href="/authorize" className='btn btn-success'>Log In with Spotify</a>
-      </div>
-    }
-    return page
+      </div>)
   }
-  return (<Router><LandingPage/></Router>)
 }
