@@ -9,7 +9,7 @@ export default function Nav(props) {
       <Form inline>
         <Button onClick={() => {
             window.access_token = null
-            window.refresh_token = null}}  color="danger">Log Out</Button>
+            window.refresh_token = null}} href={"../"} color="danger">Log Out</Button>
       </Form>
     </div>
 

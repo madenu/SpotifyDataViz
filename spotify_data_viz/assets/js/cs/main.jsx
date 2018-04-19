@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {Provider, connect} from 'react-redux'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 
-import store from './store'
+
 import Nav from './nav'
 import TrackAnalysis from './track_analysis'
 import AlbumMood from './album_mood'
@@ -13,13 +13,20 @@ export default function main_init(root, store, channel) {
     spotify_access_token: window.access_token,
     spotify_refresh_token: window.refresh_token
   }
+
+    channel.join().receive("ok", resp => {
+        console.log("Joined successfully", resp)
+    }).receive("error", resp => {
+        console.log("Unable to join", resp)
+    })
   ReactDOM.render(<Provider store={store}>
-    <Main channel={channel} token={token}/>
+    <Main channel={channel} token={token} state={store.getState()}/>
   </Provider>, root)
 }
 
 function Site(props) {
   function AppLinks() {
+
     return (<div>
       <div className="card" style={{
           width: "18rem"
@@ -52,17 +59,22 @@ function Site(props) {
   </div>)
 }
 
-function Main(props) {
-  props.channel.join().receive("ok", resp => {
-    console.log("Joined successfully", resp)
-  }).receive("error", resp => {
-    console.log("Unable to join", resp)
-  })
+let Main = connect((state) => state)((props) => {
+
+    let user = window.user_id
+    console.log(user)
+    console.log(props)
+    console.log("user_list")
+    console.log(props.user_list)
+    console.log("album_list")
+    console.log(props.album_list)
+
 
   function LandingPage() {
     let page = null
-    if (window.access_token) {
-      page = <Site channel={props.channel} token={props.token}/>
+
+    if (user != 0) {
+      page = <Site channel={props.channel} token={props.token} />
     } else {
       page = <div id="login">
         <a href="/authorize" className='btn btn-success'>Log In with Spotify</a>
@@ -73,4 +85,4 @@ function Main(props) {
   }
 
   return (<Router><LandingPage/></Router>)
-}
+})

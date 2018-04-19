@@ -15,6 +15,8 @@ STATE LAYOUT
     query: String,
     results, List<{name: String, id: String}>
   }
+  album_list: List<{album_id: String, album_name: String, artist_name: String, times_searched: Integer }
+  user_list: List<{user_id: String, access_token: String, refresh_token: String, timestamp: UTC DateTime
 }
 */
 
@@ -46,6 +48,15 @@ function album_search(state = empty_album_search, action) {
   }
 }
 
+function album_list(state = [], action) {
+  switch (action.type) {
+      case 'ALBUMS_LIST':
+        return [...action.albums];
+      default:
+        return state;
+  }
+}
+
 let empty_track_analysis = {
   recent_tracks: []
 }
@@ -59,12 +70,23 @@ function track_analysis(state = empty_track_analysis, action) {
   }
 }
 
+function user_list(state = [], action) {
+    switch (action.type) {
+        case 'USERS_LIST':
+            return [...action.users];
+        default:
+            return state;
+    }
+}
+
 
 function root_reducer(state, action) {
   let reducer = combineReducers({
     album_mood,
     album_search,
+    album_list,
     track_analysis,
+    user_list
   })
   state = reducer(state, action)
   return deepFreeze(state)
