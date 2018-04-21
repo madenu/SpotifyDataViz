@@ -27,7 +27,7 @@ function AppLinks(props) {
       <img className="card-img-top" src="/images/album-mood.png" alt="Card image cap"/>
       <div className="card-body">
         <h5 className="card-title">Album Mood</h5>
-        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <p className="card-text">Search for an album and see a line plot of the change in tempo and valence with each track</p>
         <Link to={"/album_mood"} className="btn btn-primary">GO!</Link>
       </div>
     </div>
@@ -38,7 +38,7 @@ function AppLinks(props) {
       <img className="card-img-top" src="/images/track-analysis.png" alt="Card image cap"/>
       <div className="card-body">
         <h5 className="card-title">Track Analysis</h5>
-        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <p className="card-text">Plot audio features of your most recently played songs on a radar spider chart</p>
         <Link to={"/track_analysis"} className="btn btn-primary">GO!</Link>
       </div>
     </div>
