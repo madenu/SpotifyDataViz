@@ -28,7 +28,7 @@ export default function main_init(root, store, channel) {
 function Main(props) {
     if (props.token.user_id != 0) {
       return (<Router>
-        <div>
+        <div id="site">
           <Nav token={props.token}/>
           <Route path='/' exact={true} render={() => <AppLinks />}/>
           <Route path='/album_mood' exact={true} render={() => <AlbumMood channel={props.channel} token={props.token}/>}/>

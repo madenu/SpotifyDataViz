@@ -8,7 +8,7 @@ defmodule SpotifyDataVizWeb.PageController do
     conn
     |> Plug.Conn.delete_resp_cookie("spotify_refresh_token")
     |> Plug.Conn.delete_resp_cookie("spotify_access_token")
-    |> render("index.html", token: %{refresh_token: "",access_token: ""}, user: 0)
+    |> render("index.html", token: %{refresh_token: "", access_token: ""}, user: 0)
   end
 
   def index(conn, _params) do
@@ -16,6 +16,7 @@ defmodule SpotifyDataVizWeb.PageController do
       case Spotify.Profile.me(conn) do
         {:ok, %{"error" => _msg_dict}} ->
           0
+
         {:ok, profile} ->
           profile.id
       end
@@ -31,7 +32,7 @@ defmodule SpotifyDataVizWeb.PageController do
     case Spotify.Authentication.authenticate(conn, params) do
       {:ok, conn} ->
         updateToken(conn)
-        render(conn, "index.html", token: Spotify.Credentials.new(conn), user: profileID(conn))
+        redirect(conn, to: "/")
 
       {:error, _reason, conn} ->
         redirect(conn, to: "/error")

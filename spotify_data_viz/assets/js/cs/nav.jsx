@@ -6,9 +6,9 @@ export default function Nav(props) {
 
   let session_info
   if (props.token) {
-    session_info = <div className="navbar-text">
+    session_info = <div className="navbar-text col-12">
       <Form inline>
-        <Button href="/logout" color="danger">Log Out</Button>
+        <Button onClick={() => window.alert("Exit and close your browser to log out.")} color="danger">Log Out</Button>
       </Form>
     </div>
 
@@ -20,7 +20,7 @@ export default function Nav(props) {
     </div>
   }
 
-  return (<nav className='navbar navbar-dark bg-dark navbar-expand'>
+  return (<nav id="nav" className='navbar navbar-dark bg-dark navbar-expand'>
     <ul className='navbar-nav mr-auto'>
       <NavItem>
         <NavLink to='/' exact={true} activeClassName='active' className='nav-link'>Main</NavLink>

@@ -27,9 +27,9 @@ defmodule SpotifyDataVizWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-   scope "/api/v1/", SpotifyDataVizWeb do
+  scope "/api/v1/", SpotifyDataVizWeb do
     pipe_through(:api)
-    resources "/albums", AlbumController, except: [:new, :edit]
-    resources "/users", UserController, except: [:new, :edit]
-   end
+    resources("/albums", AlbumController, except: [:new, :edit])
+    resources("/users", UserController, except: [:new, :edit])
+  end
 end

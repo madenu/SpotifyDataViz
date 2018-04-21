@@ -5,9 +5,9 @@ import {
   Card,
   CardBody,
   Button,
-  Label,
+  Form,
   Input,
-  Form
+  Label
 } from 'reactstrap'
 
 export function AlbumMood(props) {
@@ -63,52 +63,47 @@ export function AlbumMood(props) {
     </CardBody>
   </Card>)
 
-  var WIDTH_IN_PERCENT_OF_PARENT = 60,
-    HEIGHT_IN_PERCENT_OF_PARENT = 80;
-
-  return (<div id="AlbumMood">
-    <Plot data={[
-        {
-          x: props.album_mood.album_tracks.map(x => x.name),
-          y: props.album_mood.album_tracks.map(x => x.valence),
-          type: 'scatter',
-          mode: 'lines',
-          name: 'valence',
-          marker: {
-            color: 'blue'
+    return (<div id="AlbumMood">
+      <Plot data={[
+          {
+            x: props.album_mood.album_tracks.map(x => x.name),
+            y: props.album_mood.album_tracks.map(x => x.valence),
+            type: 'scatter',
+            mode: 'lines',
+            name: 'valence',
+            marker: {
+              color: 'blue'
+            }
+          }, {
+            x: props.album_mood.album_tracks.map(x => x.name),
+            y: props.album_mood.album_tracks.map(x => x.tempo),
+            type: 'scatter',
+            mode: 'lines',
+            name: 'tempo (normalized)',
+            marker: {
+              color: 'green'
+            }
           }
-        }, {
-          x: props.album_mood.album_tracks.map(x => x.name),
-          y: props.album_mood.album_tracks.map(x => x.tempo),
-          type: 'scatter',
-          mode: 'lines',
-          name: 'tempo (normalized)',
-          marker: {
-            color: 'green'
-          }
-        }
-      ]} layout={{
-        width: WIDTH_IN_PERCENT_OF_PARENT + '%',
-        'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
-
-        height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
-        'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh',
-
-        title: props.album_mood.album_name
-      }}/>
-    <div>
-      <Form>
-        <Label for='album'>Album Name</Label>
-        <Input autoFocus name='album' type='text' value={props.album_search.query} onChange={update}/>
-        <Button className={"btn btn-primary"} onClick={searchAlbum}>Search</Button>
-      </Form>
+        ]} layout={{
+          width: 1100,
+          margin: 0,
+          padding: 0,
+          title: props.album_mood.album_name
+        }}/>
+      <Form id="search-form" inline={true} onSubmit={(event) => {
+            event.preventDefault();
+            searchAlbum()
+          }}>
+          <Label className="mr-sm-2">Album Name</Label>
+          <Input autoFocus={true} className="mr-sm-2" type='text' value={props.album_search.query} onChange={update}></Input>
+          <Button type="submit">Search</Button>
+        </Form>
       <ul>{results}</ul>
-    </div>
-  </div>)
-}
+    </div>)
+  }
 
-function propsFromState(state) {
-  return {album_mood: state.album_mood, album_search: state.album_search}
-}
+  function propsFromState(state) {
+    return {album_mood: state.album_mood, album_search: state.album_search}
+  }
 
-export default connect(propsFromState)(AlbumMood)
+  export default connect(propsFromState)(AlbumMood)
