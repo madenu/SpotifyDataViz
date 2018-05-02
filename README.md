@@ -13,19 +13,12 @@
 * ~~Create a 2000-word report~~
 
 ## TODO
-* ~~**FINISH THE REPORT**~~
-* ~~**DEPLOY (JJ and MD each in parallel)**~~
-* ~~Normalize tempo~~
-* ~~Make selection in track analysis sticky (add selected to track_analysis state)~~
-* ~~Add artist name for tracks~~
-* ~~Show title and artist as heading for radar chart in track analysis~~
-* ~~Fix spacing and layout of track analysis~~
-* ~~Fix spacing and layout of album mood~~
-* ~~Put finishing touches on main page~~
-* ~~Fix the redirect after authentication (the page is blank but Nav is there)~~
-* ~~Fix logout button~~
-* ~~Fix form focus for album mood~~
-* ~~Get radar chart working~~
-* ~~Plot a sample album mood~~
-* ~~Delete stuff associated with user token from redux state on server side~~
-* ~~Handle expired tokens:~~
+* Make a login page
+* Remove OAuth redirect link
+* Update so token isn't passed to client
+* Fix top searched albums (currently not sorting by top)
+* Fix album graph so song titles are fully visible
+* Add additional audio features to album graph (add a toggle?)
+* Create separate Spotify Dev account for app
+* Mobile friendly
+* MOAR VIZ
