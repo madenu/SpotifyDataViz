@@ -9,4 +9,6 @@
 * Add additional audio features to album graph (add a toggle?)
 * Create separate Spotify Dev account for app
 * Mobile friendly
+* Clean up unused deps
+* Add .idea and node modules to .gitignore
 * MOAR VIZ
