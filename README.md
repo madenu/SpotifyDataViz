@@ -1,16 +1,4 @@
-# cs5610project2
-
-## Requirements Checklist
-* ~~Phoenix Elixir for non-trivial server-side logic~~
-* ~~Use external API (Spotify)~~
-* ~~Use Postgres database (auth tokens or site log info)~~
-* ~~Use a channel (i.e. a websocket) to pass data to/from server~~
-* ~~Use React-Router to create a SPA~~
-* ~~Use React to render the app~~
-* ~~(Use Redux to control app state)~~
-* ~~Use something not covered this semester (D3.js)~~
-* ~~Deploy to VPS with HTTPS~~
-* ~~Create a 2000-word report~~
+# Spotify Data Viz
 
 ## TODO
 * Make a login page
