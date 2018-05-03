@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PORT=5103
+export PORT=5110
 export MIX_ENV=prod
 export GIT_PATH=/home/spotify_data_viz/cs5610project2/spotify_data_viz
 
